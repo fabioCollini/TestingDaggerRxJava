@@ -30,6 +30,6 @@ public class UserInteractor {
         return service.getBadges(user.id())
                 .subscribeOn(Schedulers.io())
                 .map(BadgeResponse::items)
-                .map(badges -> UserStats.createUserStats(user, badges));
+                .map(badges -> UserStats.create(user, badges));
     }
 }

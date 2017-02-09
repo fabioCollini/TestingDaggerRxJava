@@ -8,11 +8,11 @@ import java.util.List;
 
 @AutoValue
 public abstract class UserResponse {
-    public static UserResponse createResponse(List<User> items) {
+    public static UserResponse create(List<User> items) {
         return new AutoValue_UserResponse(items);
     }
 
-    public static UserResponse createResponse(User... items) {
+    public static UserResponse create(User... items) {
         return new AutoValue_UserResponse(Arrays.asList(items));
     }
 

@@ -1,12 +1,13 @@
 package it.droidcon.testingdaggerrxjava.test1;
 
-import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
-import it.droidcon.testingdaggerrxjava.EspressoSchedulerRule;
+import it.droidcon.testingdaggerrxjava.EspressoRule;
 import it.droidcon.testingdaggerrxjava.MainActivity;
-import it.droidcon.testingdaggerrxjava.MyApp;
 import it.droidcon.testingdaggerrxjava.R;
+import it.droidcon.testingdaggerrxjava.core.gson.BadgeResponse;
 import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService;
+import it.droidcon.testingdaggerrxjava.core.gson.User;
+import it.droidcon.testingdaggerrxjava.core.gson.UserResponse;
 import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Rule;
@@ -17,40 +18,33 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static io.reactivex.Single.just;
-import static it.droidcon.testingdaggerrxjava.core.gson.Badge.createBadge;
-import static it.droidcon.testingdaggerrxjava.core.gson.BadgeResponse.createBadgeResponse;
-import static it.droidcon.testingdaggerrxjava.core.gson.User.createUser;
-import static it.droidcon.testingdaggerrxjava.core.gson.UserResponse.createResponse;
+import static it.droidcon.testingdaggerrxjava.TestUtils.getAppFromInstrumentation;
 import static org.mockito.Mockito.when;
 
 public class EndToEndTest {
     @Rule public final ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class, false, false);
 
-    @Rule public final EspressoSchedulerRule espressoSchedulerRule = new EspressoSchedulerRule();
+    @Rule public final EspressoRule espressoRule = new EspressoRule();
 
     @Inject StackOverflowService stackOverflowService;
 
-    @Before
-    public void setUp() throws Exception {
+    @Before public void setUp() {
         TestApplicationComponent testApplicationComponent = DaggerTestApplicationComponent.create();
-        MyApp app = (MyApp) InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
-        app.setComponent(testApplicationComponent);
+        getAppFromInstrumentation().setComponent(testApplicationComponent);
         testApplicationComponent.inject(this);
     }
 
-    @Test
-    public void launchActivity() {
-        when(stackOverflowService.getTopUsers()).thenReturn(just(createResponse(
-                createUser(1, 10, "user1"),
-                createUser(2, 20, "user2")
+    @Test public void shouldDisplayUsers() {
+        when(stackOverflowService.getTopUsers()).thenReturn(just(UserResponse.create(
+                User.create(1, 50, "user1"),
+                User.create(2, 30, "user2")
         )));
 
-        when(stackOverflowService.getBadges(1)).thenReturn(just(createBadgeResponse(createBadge("badge1"))));
-        when(stackOverflowService.getBadges(2)).thenReturn(just(createBadgeResponse(createBadge("badge2"), createBadge("badge3"))));
+        when(stackOverflowService.getBadges(1)).thenReturn(just(BadgeResponse.create("badge1")));
+        when(stackOverflowService.getBadges(2)).thenReturn(just(BadgeResponse.create("badge2", "badge3")));
 
         rule.launchActivity(null);
 
-        onView(withId(R.id.text)).check(matches(withText("10 user1\nbadge1\n\n20 user2\nbadge2, badge3\n\n")));
-        System.out.println(123);
+        onView(withId(R.id.text)).check(matches(withText("50 user1\nbadge1\n\n30 user2\nbadge2, badge3")));
     }
 }

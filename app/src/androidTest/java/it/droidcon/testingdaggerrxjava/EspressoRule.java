@@ -10,7 +10,7 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
-public class EspressoSchedulerRule implements TestRule {
+public class EspressoRule implements TestRule {
 
     private final Scheduler asyncTaskScheduler = Schedulers.from(AsyncTask.THREAD_POOL_EXECUTOR);
 

@@ -7,7 +7,7 @@ import com.google.gson.TypeAdapter;
 @AutoValue
 public abstract class Badge {
 
-    public static Badge createBadge(String name) {
+    public static Badge create(String name) {
         return new AutoValue_Badge(name);
     }
 

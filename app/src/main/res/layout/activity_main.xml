@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    >
     <data>
         <variable
             name="viewModel"
             type="it.droidcon.testingdaggerrxjava.UserListViewModel"/>
     </data>
-    <ScrollView
-        android:id="@+id/activity_main"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp">
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp">
 
-        <TextView
-            android:id="@+id/text"
-            android:text="@{viewModel.model.userList}"
+            <TextView
+                android:id="@+id/text"
+                android:text="@{viewModel.model.userList}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </ScrollView>
+
+        <ProgressBar
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </ScrollView>
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>
 </layout>
