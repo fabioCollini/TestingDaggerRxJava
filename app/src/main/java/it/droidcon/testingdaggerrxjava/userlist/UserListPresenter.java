@@ -4,17 +4,18 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import it.droidcon.testingdaggerrxjava.core.UserInteractor;
 import it.droidcon.testingdaggerrxjava.core.UserStats;
-import javax.inject.Inject;
 
 import static it.droidcon.testingdaggerrxjava.core.StringUtils.join;
 
 public class UserListPresenter {
 
-    @Inject UserInteractor userInteractor;
+    private UserInteractor userInteractor;
 
-    @Inject UserListActivity activity;
+    private UserListActivity activity;
 
-    @Inject public UserListPresenter() {
+    public UserListPresenter(UserInteractor userInteractor, UserListActivity activity) {
+        this.userInteractor = userInteractor;
+        this.activity = activity;
     }
 
     public void reloadUserList() {
