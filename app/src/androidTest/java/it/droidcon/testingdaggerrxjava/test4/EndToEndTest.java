@@ -3,7 +3,6 @@ package it.droidcon.testingdaggerrxjava.test4;
 import android.support.test.rule.ActivityTestRule;
 import io.reactivex.Observable;
 import it.droidcon.testingdaggerrxjava.EspressoRule;
-import it.droidcon.testingdaggerrxjava.MainActivity;
 import it.droidcon.testingdaggerrxjava.R;
 import it.droidcon.testingdaggerrxjava.core.UserInteractor;
 import it.droidcon.testingdaggerrxjava.core.UserStats;
@@ -11,6 +10,7 @@ import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService;
 import it.droidcon.testingdaggerrxjava.dagger.ApplicationComponent;
 import it.droidcon.testingdaggerrxjava.dagger.DaggerApplicationComponent;
 import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule;
+import it.droidcon.testingdaggerrxjava.userlist.UserListActivity;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,7 +26,7 @@ import static it.droidcon.testingdaggerrxjava.TestUtils.getAppFromInstrumentatio
 import static org.mockito.Mockito.when;
 
 public class EndToEndTest {
-    @Rule public final ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class, false, false);
+    @Rule public final ActivityTestRule<UserListActivity> rule = new ActivityTestRule<>(UserListActivity.class, false, false);
 
     @Rule public final EspressoRule espressoRule = new EspressoRule();
 

@@ -49,11 +49,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.6.2'
     testCompile 'org.assertj:assertj-core:2.5.0'
-    testCompile 'com.github.fabioCollini:DaggerMock:0.6.3'
+    testCompile 'com.github.fabioCollini:DaggerMock:0.6.4'
 
     androidTestAnnotationProcessor 'com.google.dagger:dagger-compiler:2.9'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
-    androidTestCompile 'com.github.fabioCollini:DaggerMock:0.6.3'
+    androidTestCompile 'com.github.fabioCollini:DaggerMock:0.6.4'
     androidTestCompile 'org.mockito:mockito-android:2.6.2'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'

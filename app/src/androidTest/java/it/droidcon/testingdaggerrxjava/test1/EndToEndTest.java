@@ -2,12 +2,12 @@ package it.droidcon.testingdaggerrxjava.test1;
 
 import android.support.test.rule.ActivityTestRule;
 import it.droidcon.testingdaggerrxjava.EspressoRule;
-import it.droidcon.testingdaggerrxjava.MainActivity;
 import it.droidcon.testingdaggerrxjava.R;
 import it.droidcon.testingdaggerrxjava.core.gson.BadgeResponse;
 import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService;
 import it.droidcon.testingdaggerrxjava.core.gson.User;
 import it.droidcon.testingdaggerrxjava.core.gson.UserResponse;
+import it.droidcon.testingdaggerrxjava.userlist.UserListActivity;
 import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,7 +22,7 @@ import static it.droidcon.testingdaggerrxjava.TestUtils.getAppFromInstrumentatio
 import static org.mockito.Mockito.when;
 
 public class EndToEndTest {
-    @Rule public final ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class, false, false);
+    @Rule public final ActivityTestRule<UserListActivity> rule = new ActivityTestRule<>(UserListActivity.class, false, false);
 
     @Rule public final EspressoRule espressoRule = new EspressoRule();
 

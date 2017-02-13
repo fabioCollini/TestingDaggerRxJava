@@ -8,6 +8,8 @@ import it.droidcon.testingdaggerrxjava.core.gson.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import static it.droidcon.testingdaggerrxjava.core.StringUtils.join;
+
 @AutoValue
 public abstract class UserStats {
 
@@ -42,5 +44,9 @@ public abstract class UserStats {
 
     public String name() {
         return user().name();
+    }
+
+    @Override public String toString() {
+        return reputation() + " " + name() + "\n" + join(badges(), ", ");
     }
 }

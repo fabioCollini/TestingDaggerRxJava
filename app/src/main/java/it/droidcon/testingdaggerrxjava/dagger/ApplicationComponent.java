@@ -1,7 +1,8 @@
 package it.droidcon.testingdaggerrxjava.dagger;
 
 import dagger.Component;
-import it.droidcon.testingdaggerrxjava.MainActivity;
+import it.droidcon.testingdaggerrxjava.userlist.UserListComponent;
+import it.droidcon.testingdaggerrxjava.userlist.UserListModule;
 import javax.inject.Singleton;
 
 @Singleton
@@ -11,5 +12,5 @@ import javax.inject.Singleton;
         UtilsModule.class
 })
 public interface ApplicationComponent {
-    void inject(MainActivity mainActivity);
+    UserListComponent userListComponent(UserListModule module);
 }
