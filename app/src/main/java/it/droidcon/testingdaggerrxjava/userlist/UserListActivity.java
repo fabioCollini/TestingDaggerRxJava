@@ -1,11 +1,14 @@
 package it.droidcon.testingdaggerrxjava.userlist;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import it.droidcon.testingdaggerrxjava.MyApp;
 import it.droidcon.testingdaggerrxjava.R;
 import javax.inject.Inject;
+
+import static android.support.design.widget.Snackbar.LENGTH_LONG;
 
 public class UserListActivity extends AppCompatActivity {
 
@@ -27,7 +30,7 @@ public class UserListActivity extends AppCompatActivity {
         text.setText(s);
     }
 
-    public void showError(Throwable throwable) {
-
+    public void showError(Throwable t) {
+        Snackbar.make(findViewById(android.R.id.content), t.getMessage(), LENGTH_LONG).show();
     }
 }
