@@ -20,7 +20,7 @@ public class UserServiceTest_3 {
 
     @Rule public MockitoRule rule = MockitoJUnit.rule();
 
-    @Rule public ImmediateSchedulerRule immediateSchedulerRule = new ImmediateSchedulerRule();
+    @Rule public TrampolineSchedulerRule trampolineSchedulerRule = new TrampolineSchedulerRule();
 
     @Mock StackOverflowService stackOverflowService;
 

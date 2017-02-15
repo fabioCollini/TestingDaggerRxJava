@@ -1,6 +1,5 @@
 package it.droidcon.testingdaggerrxjava;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.plugins.RxAndroidPlugins;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
@@ -8,24 +7,21 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
-public class ImmediateSchedulerRule implements TestRule {
-
-    private final Scheduler immediate = Schedulers.trampoline();
-    //        new Scheduler() {
-    //    @Override public Worker createWorker() {
-    //        return new ExecutorScheduler.ExecutorWorker(Runnable::run);
-    //    }
-    //};
+public class TrampolineSchedulerRule implements TestRule {
 
     @Override
     public Statement apply(final Statement base, Description description) {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                RxJavaPlugins.setIoSchedulerHandler(scheduler -> immediate);
-                RxJavaPlugins.setComputationSchedulerHandler(scheduler -> immediate);
-                RxJavaPlugins.setNewThreadSchedulerHandler(scheduler -> immediate);
-                RxAndroidPlugins.setMainThreadSchedulerHandler(scheduler -> immediate);
+                RxJavaPlugins.setIoSchedulerHandler(
+                        scheduler -> Schedulers.trampoline());
+                RxJavaPlugins.setComputationSchedulerHandler(
+                        scheduler -> Schedulers.trampoline());
+                RxJavaPlugins.setNewThreadSchedulerHandler(
+                        scheduler -> Schedulers.trampoline());
+                RxAndroidPlugins.setInitMainThreadSchedulerHandler(
+                        scheduler -> Schedulers.trampoline());
 
                 try {
                     base.evaluate();

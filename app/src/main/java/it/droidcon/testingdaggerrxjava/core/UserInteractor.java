@@ -7,7 +7,6 @@ import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService;
 import it.droidcon.testingdaggerrxjava.core.gson.User;
 import it.droidcon.testingdaggerrxjava.core.gson.UserResponse;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class UserInteractor {
     private StackOverflowService service;
@@ -22,8 +21,9 @@ public class UserInteractor {
                 .take(5)
                 .concatMapEager(user -> loadUserStats(user).toObservable())
                 .toList()
-                .retry(1)
-                .timeout(20, TimeUnit.SECONDS);
+                //.retry(1)
+                //.timeout(20, TimeUnit.SECONDS)
+                ;
     }
 
     private Single<UserStats> loadUserStats(User user) {
