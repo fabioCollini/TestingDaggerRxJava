@@ -6,6 +6,7 @@ import com.google.gson.TypeAdapter;
 import it.droidcon.testingdaggerrxjava.core.gson.Badge;
 import it.droidcon.testingdaggerrxjava.core.gson.User;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static it.droidcon.testingdaggerrxjava.core.StringUtils.join;
@@ -14,16 +15,15 @@ import static it.droidcon.testingdaggerrxjava.core.StringUtils.join;
 public abstract class UserStats {
 
     public static UserStats create(User user, List<Badge> badges) {
-        return new AutoValue_UserStats(user, badges);
+        List<String> names = new ArrayList<>();
+        for (Badge badge : badges) {
+            names.add(badge.name());
+        }
+        return new AutoValue_UserStats(user, names);
     }
 
     public static UserStats create(int id, int reputation, String name, String... badges) {
-        List<Badge> l = new ArrayList<>(badges.length);
-        for (String item : badges) {
-            l.add(Badge.create(item));
-        }
-
-        return new AutoValue_UserStats(User.create(id, reputation, name), l);
+        return new AutoValue_UserStats(User.create(id, reputation, name), Arrays.asList(badges));
     }
 
     public static TypeAdapter<UserStats> typeAdapter(Gson gson) {
@@ -32,7 +32,7 @@ public abstract class UserStats {
 
     public abstract User user();
 
-    public abstract List<Badge> badges();
+    public abstract List<String> badges();
 
     public int id() {
         return user().id();

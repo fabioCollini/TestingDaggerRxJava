@@ -1,6 +1,7 @@
 package it.droidcon.testingdaggerrxjava.test3;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import it.cosenonjaviste.daggermock.DaggerMockRule;
 import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.droidcon.testingdaggerrxjava.TrampolineSchedulerRule;
@@ -42,9 +43,9 @@ public class UserInteractorTest {
         ).toList());
 
         when(stackOverflowService.getBadges(1)).thenReturn(
-                Observable.fromArray(Badge.create("badge1")).toList());
+                Single.just(Badge.createList("badge1")));
         when(stackOverflowService.getBadges(2)).thenReturn(
-                Observable.fromArray(Badge.create("badge2"), Badge.create("badge3")).toList());
+                Single.just(Badge.createList("badge2", "badge3")));
 
         userInteractor.loadUsers()
                 .test()
