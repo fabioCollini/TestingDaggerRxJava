@@ -1,15 +1,15 @@
 package it.droidcon.testingdaggerrxjava.test4;
 
+import io.reactivex.Observable;
 import io.reactivex.observers.TestObserver;
 import it.cosenonjaviste.daggermock.DaggerMockRule;
 import it.cosenonjaviste.daggermock.InjectFromComponent;
 import it.droidcon.testingdaggerrxjava.TestSchedulerRule;
 import it.droidcon.testingdaggerrxjava.core.UserInteractor;
 import it.droidcon.testingdaggerrxjava.core.UserStats;
-import it.droidcon.testingdaggerrxjava.core.gson.BadgeResponse;
+import it.droidcon.testingdaggerrxjava.core.gson.Badge;
 import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService;
 import it.droidcon.testingdaggerrxjava.core.gson.User;
-import it.droidcon.testingdaggerrxjava.core.gson.UserResponse;
 import it.droidcon.testingdaggerrxjava.dagger.ApplicationComponent;
 import it.droidcon.testingdaggerrxjava.dagger.StackOverflowServiceModule;
 import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule;
@@ -21,7 +21,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import static io.reactivex.Single.just;
 import static it.droidcon.testingdaggerrxjava.PredicateUtils.check;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -39,15 +38,15 @@ public class UserInteractorTest {
 
     @Test
     public void shouldLoadUsers() throws Exception {
-        when(stackOverflowService.getTopUsers()).thenReturn(just(UserResponse.create(
+        when(stackOverflowService.getTopUsers()).thenReturn(Observable.fromArray(
                 User.create(1, 50, "user1"),
                 User.create(2, 30, "user2")
-        )));
+        ).toList());
 
         when(stackOverflowService.getBadges(1)).thenReturn(
-                just(BadgeResponse.create("badge1")).delay(2, TimeUnit.SECONDS));
+                Observable.fromArray(Badge.create("badge1")).toList().delay(2, TimeUnit.SECONDS));
         when(stackOverflowService.getBadges(2)).thenReturn(
-                just(BadgeResponse.create("badge2", "badge3")).delay(1, TimeUnit.SECONDS));
+                Observable.fromArray(Badge.create("badge2"), Badge.create("badge3")).toList().delay(1, TimeUnit.SECONDS));
 
         TestObserver<List<UserStats>> testObserver = userInteractor.loadUsers().test();
 

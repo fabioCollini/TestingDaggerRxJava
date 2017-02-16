@@ -1,12 +1,12 @@
 package it.droidcon.testingdaggerrxjava.test1;
 
 import android.support.test.rule.ActivityTestRule;
+import io.reactivex.Observable;
 import it.droidcon.testingdaggerrxjava.EspressoRule;
 import it.droidcon.testingdaggerrxjava.R;
-import it.droidcon.testingdaggerrxjava.core.gson.BadgeResponse;
+import it.droidcon.testingdaggerrxjava.core.gson.Badge;
 import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService;
 import it.droidcon.testingdaggerrxjava.core.gson.User;
-import it.droidcon.testingdaggerrxjava.core.gson.UserResponse;
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity;
 import javax.inject.Inject;
 import org.junit.Before;
@@ -17,7 +17,6 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static io.reactivex.Single.just;
 import static it.droidcon.testingdaggerrxjava.TestUtils.getAppFromInstrumentation;
 import static org.mockito.Mockito.when;
 
@@ -39,17 +38,15 @@ public class EndToEndTest {
   //...
 
   @Test public void shouldDisplayUsers() {
-    when(stackOverflowService.getTopUsers()).thenReturn(
-        just(UserResponse.create(
+    when(stackOverflowService.getTopUsers()).thenReturn(Observable.fromArray(
             User.create(1, 50, "user1"),
             User.create(2, 30, "user2")
-        ))
-    );
+    ).toList());
 
     when(stackOverflowService.getBadges(1)).thenReturn(
-        just(BadgeResponse.create("badge1")));
+            Observable.fromArray(Badge.create("badge1")).toList());
     when(stackOverflowService.getBadges(2)).thenReturn(
-        just(BadgeResponse.create("badge2", "badge3")));
+            Observable.fromArray(Badge.create("badge2"), Badge.create("badge3")).toList());
 
     rule.launchActivity(null);
 
