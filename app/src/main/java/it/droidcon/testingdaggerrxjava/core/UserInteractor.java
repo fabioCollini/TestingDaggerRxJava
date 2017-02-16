@@ -9,27 +9,24 @@ import it.droidcon.testingdaggerrxjava.core.gson.UserResponse;
 import java.util.List;
 
 public class UserInteractor {
-    private StackOverflowService service;
+  private StackOverflowService service;
 
-    public UserInteractor(StackOverflowService service) {
-        this.service = service;
-    }
+  public UserInteractor(StackOverflowService service) {
+    this.service = service;
+  }
 
-    public Single<List<UserStats>> loadUsers() {
-        return service.getTopUsers()
-                .flattenAsObservable(UserResponse::items)
-                .take(5)
-                .concatMapEager(user -> loadUserStats(user).toObservable())
-                .toList()
-                //.retry(1)
-                //.timeout(20, TimeUnit.SECONDS)
-                ;
-    }
+  public Single<List<UserStats>> loadUsers() {
+    return service.getTopUsers()
+        .flattenAsObservable(UserResponse::items)
+        .take(5)
+        .concatMapEager(user -> loadUserStats(user).toObservable())
+        .toList();
+  }
 
-    private Single<UserStats> loadUserStats(User user) {
-        return service.getBadges(user.id())
-                .subscribeOn(Schedulers.io())
-                .map(BadgeResponse::items)
-                .map(badges -> UserStats.create(user, badges));
-    }
+  private Single<UserStats> loadUserStats(User user) {
+    return service.getBadges(user.id())
+        .subscribeOn(Schedulers.io())
+        .map(BadgeResponse::items)
+        .map(badges -> UserStats.create(user, badges));
+  }
 }

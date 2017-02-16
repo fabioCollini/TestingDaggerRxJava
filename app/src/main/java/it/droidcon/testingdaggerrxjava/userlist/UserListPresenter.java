@@ -9,27 +9,27 @@ import static it.droidcon.testingdaggerrxjava.core.StringUtils.join;
 
 public class UserListPresenter {
 
-    private UserInteractor userInteractor;
+  private UserInteractor userInteractor;
 
-    private UserListActivity activity;
+  private UserListActivity activity;
 
-    public UserListPresenter(UserInteractor userInteractor, UserListActivity activity) {
-        this.userInteractor = userInteractor;
-        this.activity = activity;
-    }
+  public UserListPresenter(UserInteractor userInteractor, UserListActivity activity) {
+    this.userInteractor = userInteractor;
+    this.activity = activity;
+  }
 
-    public void reloadUserList() {
-        userInteractor
-                .loadUsers()
-                .flattenAsObservable(l -> l)
-                .map(UserStats::toString)
-                .toList()
-                .map(l -> join(l, "\n\n"))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        activity::updateText,
-                        activity::showError
-                );
-    }
+  public void reloadUserList() {
+    userInteractor
+        .loadUsers()
+        .flattenAsObservable(l -> l)
+        .map(UserStats::toString)
+        .toList()
+        .map(l -> join(l, "\n\n"))
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(
+            activity::updateText,
+            activity::showError
+        );
+  }
 }

@@ -22,29 +22,38 @@ import static it.droidcon.testingdaggerrxjava.TestUtils.getAppFromInstrumentatio
 import static org.mockito.Mockito.when;
 
 public class EndToEndTest {
-    @Rule public final ActivityTestRule<UserListActivity> rule = new ActivityTestRule<>(UserListActivity.class, false, false);
+  @Rule public final ActivityTestRule<UserListActivity> rule =
+      new ActivityTestRule<>(UserListActivity.class, false, false);
 
-    @Rule public final EspressoRule espressoRule = new EspressoRule();
+  @Rule public final EspressoRule espressoRule = new EspressoRule();
 
-    @Inject StackOverflowService stackOverflowService;
+  @Inject StackOverflowService stackOverflowService;
 
-    @Before public void setUp() {
-        TestApplicationComponent testApplicationComponent = DaggerTestApplicationComponent.create();
-        getAppFromInstrumentation().setComponent(testApplicationComponent);
-        testApplicationComponent.inject(this);
-    }
+  @Before public void setUp() {
+    TestApplicationComponent applicationComponent =
+        DaggerTestApplicationComponent.create();
+    getAppFromInstrumentation().setComponent(applicationComponent);
+    applicationComponent.inject(this);
+  }
 
-    @Test public void shouldDisplayUsers() {
-        when(stackOverflowService.getTopUsers()).thenReturn(just(UserResponse.create(
-                User.create(1, 50, "user1"),
-                User.create(2, 30, "user2")
-        )));
+  //...
 
-        when(stackOverflowService.getBadges(1)).thenReturn(just(BadgeResponse.create("badge1")));
-        when(stackOverflowService.getBadges(2)).thenReturn(just(BadgeResponse.create("badge2", "badge3")));
+  @Test public void shouldDisplayUsers() {
+    when(stackOverflowService.getTopUsers()).thenReturn(
+        just(UserResponse.create(
+            User.create(1, 50, "user1"),
+            User.create(2, 30, "user2")
+        ))
+    );
 
-        rule.launchActivity(null);
+    when(stackOverflowService.getBadges(1)).thenReturn(
+        just(BadgeResponse.create("badge1")));
+    when(stackOverflowService.getBadges(2)).thenReturn(
+        just(BadgeResponse.create("badge2", "badge3")));
 
-        onView(withId(R.id.text)).check(matches(withText("50 user1\nbadge1\n\n30 user2\nbadge2, badge3")));
-    }
+    rule.launchActivity(null);
+
+    onView(withId(R.id.text)).check(matches(withText(
+        "50 user1\nbadge1\n\n30 user2\nbadge2, badge3")));
+  }
 }

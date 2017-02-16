@@ -20,26 +20,29 @@ import static it.droidcon.testingdaggerrxjava.TestUtils.getAppFromInstrumentatio
 import static org.mockito.Mockito.when;
 
 public class EndToEndTest {
-    @Rule public final ActivityTestRule<UserListActivity> rule = new ActivityTestRule<>(UserListActivity.class, false, false);
+  @Rule public final ActivityTestRule<UserListActivity> rule =
+      new ActivityTestRule<>(UserListActivity.class, false, false);
 
-    @Rule public final EspressoRule espressoRule = new EspressoRule();
+  @Rule public final EspressoRule espressoRule = new EspressoRule();
 
-    @Inject UserInteractor userInteractor;
+  @Inject UserInteractor userInteractor;
 
-    @Before public void setUp() {
-        TestApplicationComponent testApplicationComponent = DaggerTestApplicationComponent.create();
-        getAppFromInstrumentation().setComponent(testApplicationComponent);
-        testApplicationComponent.inject(this);
-    }
+  @Before public void setUp() {
+    TestApplicationComponent applicationComponent =
+        DaggerTestApplicationComponent.create();
+    getAppFromInstrumentation().setComponent(applicationComponent);
+    applicationComponent.inject(this);
+  }
 
-    @Test public void shouldDisplayUsers() {
-        when(userInteractor.loadUsers()).thenReturn(Observable.fromArray(
-                UserStats.create(1, 50, "user1", "badge1"),
-                UserStats.create(2, 30, "user2", "badge2", "badge3")
-        ).toList());
+  @Test public void shouldDisplayUsers() {
+    when(userInteractor.loadUsers()).thenReturn(Observable.fromArray(
+        UserStats.create(1, 50, "user1", "badge1"),
+        UserStats.create(2, 30, "user2", "badge2", "badge3")
+    ).toList());
 
-        rule.launchActivity(null);
+    rule.launchActivity(null);
 
-        onView(withId(R.id.text)).check(matches(withText("50 user1\nbadge1\n\n30 user2\nbadge2, badge3")));
-    }
+    onView(withId(R.id.text)).check(matches(withText(
+        "50 user1\nbadge1\n\n30 user2\nbadge2, badge3")));
+  }
 }
