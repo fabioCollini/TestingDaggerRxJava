@@ -18,25 +18,29 @@ import static org.mockito.Mockito.when;
 
 public class UserListPresenterTest {
 
-    @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
+  @Rule public MockitoRule mockitoRule =
+          MockitoJUnit.rule();
 
-    @Rule public TrampolineSchedulerRule schedulerRule = new TrampolineSchedulerRule();
+  @Rule public TrampolineSchedulerRule schedulerRule =
+          new TrampolineSchedulerRule();
 
-    @Mock UserInteractor userInteractor;
+  @Mock UserInteractor userInteractor;
 
-    @Mock UserListActivity activity;
+  @Mock UserListActivity activity;
 
-    @InjectMocks UserListPresenter presenter;
+  @InjectMocks UserListPresenter presenter;
 
-    @Test
-    public void shouldLoadUsers() throws Exception {
-        when(userInteractor.loadUsers()).thenReturn(Observable.fromArray(
-                UserStats.create(1, 50, "user1", "badge1"),
-                UserStats.create(2, 30, "user2", "badge2", "badge3")
+  @Test
+  public void shouldLoadUsers() {
+    when(userInteractor.loadUsers()).thenReturn(
+        Observable.fromArray(
+            UserStats.create(1, 50, "user1", "badge1"),
+            UserStats.create(2, 30, "user2", "badge2", "badge3")
         ).toList());
 
-        presenter.reloadUserList();
+    presenter.reloadUserList();
 
-        verify(activity).updateText("50 user1\nbadge1\n\n30 user2\nbadge2, badge3");
-    }
+    verify(activity).updateText(
+            "50 user1\nbadge1\n\n30 user2\nbadge2, badge3");
+  }
 }

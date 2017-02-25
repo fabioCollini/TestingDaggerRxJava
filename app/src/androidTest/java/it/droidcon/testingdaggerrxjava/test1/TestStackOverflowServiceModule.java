@@ -8,7 +8,8 @@ import org.mockito.Mockito;
 
 @Module
 public class TestStackOverflowServiceModule {
-    @Provides @Singleton public StackOverflowService provideStackOverflowService() {
-        return Mockito.mock(StackOverflowService.class);
-    }
+  @Provides @Singleton
+  public StackOverflowService provideStackOverflowService() {
+    return Mockito.mock(StackOverflowService.class);
+  }
 }

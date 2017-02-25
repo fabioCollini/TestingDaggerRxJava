@@ -23,32 +23,38 @@ import static it.droidcon.testingdaggerrxjava.TestUtils.getAppFromInstrumentatio
 import static org.mockito.Mockito.when;
 
 public class EndToEndTest {
-    @Rule public final ActivityTestRule<UserListActivity> rule = new ActivityTestRule<>(UserListActivity.class, false, false);
+    @Rule public ActivityTestRule<UserListActivity> rule =
+            new ActivityTestRule<>(UserListActivity.class, false, false);
 
-    @Rule public final EspressoRule espressoRule = new EspressoRule();
+    @Rule public EspressoRule espressoRule = new EspressoRule();
 
     @Inject UserInteractor userInteractor;
 
     @Before public void setUp() {
-        TestApplicationComponent testApplicationComponent = DaggerTestApplicationComponent.builder()
-                .userInteractorModule(new UserInteractorModule() {
-                    @Override public UserInteractor provideUserInteractor(StackOverflowService service) {
-                        return Mockito.mock(UserInteractor.class);
-                    }
-                })
-                .build();
-        getAppFromInstrumentation().setComponent(testApplicationComponent);
-        testApplicationComponent.inject(this);
+        TestApplicationComponent component =
+                DaggerTestApplicationComponent.builder()
+                        .userInteractorModule(new UserInteractorModule() {
+                            @Override
+                            public UserInteractor provideUserInteractor(
+                                    StackOverflowService service) {
+                                return Mockito.mock(UserInteractor.class);
+                            }
+                        })
+                        .build();
+        getAppFromInstrumentation().setComponent(component);
+        component.inject(this);
     }
 
     @Test public void shouldDisplayUsers() {
-        when(userInteractor.loadUsers()).thenReturn(Observable.fromArray(
-                UserStats.create(1, 50, "user1", "badge1"),
-                UserStats.create(2, 30, "user2", "badge2", "badge3")
-        ).toList());
+        when(userInteractor.loadUsers()).thenReturn(
+                Observable.fromArray(
+                        UserStats.create(1, 50, "user1", "badge1"),
+                        UserStats.create(2, 30, "user2", "badge2", "badge3")
+                ).toList());
 
         rule.launchActivity(null);
 
-        onView(withId(R.id.text)).check(matches(withText("50 user1\nbadge1\n\n30 user2\nbadge2, badge3")));
+        onView(withId(R.id.text)).check(matches(withText(
+                "50 user1\nbadge1\n\n30 user2\nbadge2, badge3")));
     }
 }

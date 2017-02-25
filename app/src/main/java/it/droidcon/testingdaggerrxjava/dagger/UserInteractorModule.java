@@ -9,7 +9,8 @@ import javax.inject.Singleton;
 @Module
 public class UserInteractorModule {
 
-    @Provides @Singleton public UserInteractor provideUserInteractor(StackOverflowService stackOverflowService) {
-        return new UserInteractor(stackOverflowService);
-    }
+  @Provides @Singleton public UserInteractor provideUserInteractor(StackOverflowService stackOverflowService) {
+    //...
+    return new UserInteractor(stackOverflowService);
+  }
 }

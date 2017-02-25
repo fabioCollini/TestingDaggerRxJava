@@ -1,4 +1,4 @@
-package it.droidcon.testingdaggerrxjava.test2;
+package it.droidcon.testingdaggerrxjava.test4;
 
 import android.support.test.rule.ActivityTestRule;
 import io.reactivex.Observable;
@@ -6,11 +6,15 @@ import it.droidcon.testingdaggerrxjava.EspressoRule;
 import it.droidcon.testingdaggerrxjava.R;
 import it.droidcon.testingdaggerrxjava.core.UserInteractor;
 import it.droidcon.testingdaggerrxjava.core.UserStats;
+import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService;
+import it.droidcon.testingdaggerrxjava.dagger.ApplicationComponent;
+import it.droidcon.testingdaggerrxjava.dagger.DaggerApplicationComponent;
+import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule;
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity;
-import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -19,20 +23,27 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static it.droidcon.testingdaggerrxjava.TestUtils.getAppFromInstrumentation;
 import static org.mockito.Mockito.when;
 
-public class EndToEndTest {
-  @Rule public ActivityTestRule<UserListActivity> rule =
-      new ActivityTestRule<>(UserListActivity.class, false, false);
+public class EndToEndTest1 {
+@Rule public ActivityTestRule<UserListActivity> rule =
+    new ActivityTestRule<>(UserListActivity.class, false, false);
 
-  @Rule public EspressoRule espressoRule = new EspressoRule();
+@Rule public EspressoRule espressoRule = new EspressoRule();
 
-  @Inject UserInteractor userInteractor;
+private UserInteractor userInteractor = Mockito.mock(UserInteractor.class);
 
-  @Before public void setUp() {
-    TestApplicationComponent component =
-        DaggerTestApplicationComponent.create();
-    getAppFromInstrumentation().setComponent(component);
-    component.inject(this);
-  }
+@Before public void setUp() {
+  ApplicationComponent component =
+      DaggerApplicationComponent.builder()
+          .userInteractorModule(new UserInteractorModule() {
+            @Override
+            public UserInteractor provideUserInteractor(
+                StackOverflowService stackOverflowService) {
+              return userInteractor;
+            }
+          })
+          .build();
+  getAppFromInstrumentation().setComponent(component);
+}
 
   @Test public void shouldDisplayUsers() {
     when(userInteractor.loadUsers()).thenReturn(

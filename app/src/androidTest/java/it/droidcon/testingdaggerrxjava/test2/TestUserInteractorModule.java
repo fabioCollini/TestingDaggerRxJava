@@ -8,7 +8,8 @@ import org.mockito.Mockito;
 
 @Module
 public class TestUserInteractorModule {
-    @Provides @Singleton public UserInteractor provideUserInteractor() {
-        return Mockito.mock(UserInteractor.class);
-    }
+  @Provides @Singleton
+  public UserInteractor provideUserInteractor() {
+    return Mockito.mock(UserInteractor.class);
+  }
 }

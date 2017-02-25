@@ -14,20 +14,17 @@ public class UserListActivity extends AppCompatActivity {
 
   @Inject UserListPresenter presenter;
 
-  private TextView text;
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     ((MyApp) getApplicationContext()).getComponent()
         .userListComponent(new UserListModule(this)).inject(this);
     setContentView(R.layout.activity_main);
-    text = (TextView) findViewById(R.id.text);
     presenter.reloadUserList();
   }
 
   public void updateText(String s) {
-    text.setText(s);
+    ((TextView) findViewById(R.id.text)).setText(s);
   }
 
   public void showError(Throwable t) {

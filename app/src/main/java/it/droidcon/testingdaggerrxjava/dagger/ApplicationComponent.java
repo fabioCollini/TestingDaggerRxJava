@@ -7,9 +7,9 @@ import javax.inject.Singleton;
 
 @Singleton
 @Component(modules = {
-        UserInteractorModule.class,
-        StackOverflowServiceModule.class
+    UserInteractorModule.class,
+    StackOverflowServiceModule.class
 })
 public interface ApplicationComponent {
-    UserListComponent userListComponent(UserListModule module);
+  UserListComponent userListComponent(UserListModule module);
 }

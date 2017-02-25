@@ -5,8 +5,6 @@ import io.reactivex.schedulers.Schedulers;
 import it.droidcon.testingdaggerrxjava.core.UserInteractor;
 import it.droidcon.testingdaggerrxjava.core.UserStats;
 
-import static it.droidcon.testingdaggerrxjava.core.StringUtils.join;
-
 public class UserListPresenter {
 
   private UserInteractor userInteractor;
@@ -23,8 +21,7 @@ public class UserListPresenter {
         .loadUsers()
         .flattenAsObservable(l -> l)
         .map(UserStats::toString)
-        .toList()
-        .map(l -> join(l, "\n\n"))
+        .reduce((s1, s2) -> s1 + "\n\n" + s2)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(

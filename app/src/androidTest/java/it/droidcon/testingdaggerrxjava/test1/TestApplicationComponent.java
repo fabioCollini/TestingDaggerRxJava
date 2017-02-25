@@ -7,9 +7,9 @@ import javax.inject.Singleton;
 
 @Singleton
 @Component(modules = {
-        UserInteractorModule.class,
-        TestStackOverflowServiceModule.class
+    UserInteractorModule.class,
+    TestStackOverflowServiceModule.class
 })
 public interface TestApplicationComponent extends ApplicationComponent {
-    void inject(EndToEndTest endToEndTest);
+  void inject(EndToEndTest endToEndTest);
 }
