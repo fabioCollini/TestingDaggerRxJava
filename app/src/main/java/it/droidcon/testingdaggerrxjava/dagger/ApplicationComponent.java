@@ -1,15 +1,18 @@
 package it.droidcon.testingdaggerrxjava.dagger;
 
 import dagger.Component;
-import it.droidcon.testingdaggerrxjava.userlist.UserListComponent;
-import it.droidcon.testingdaggerrxjava.userlist.UserListModule;
+import dagger.android.AndroidInjectionModule;
+import it.droidcon.testingdaggerrxjava.MyApp;
+import it.droidcon.testingdaggerrxjava.userlist.UserListModuleDef;
 import javax.inject.Singleton;
 
 @Singleton
 @Component(modules = {
     UserInteractorModule.class,
-    StackOverflowServiceModule.class
+    StackOverflowServiceModule.class,
+    AndroidInjectionModule.class,
+    UserListModuleDef.class
 })
 public interface ApplicationComponent {
-  UserListComponent userListComponent(UserListModule module);
+  void inject(MyApp myApp);
 }

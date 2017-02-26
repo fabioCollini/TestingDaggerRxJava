@@ -23,6 +23,9 @@ android {
 }
 
 dependencies {
+    compile project(path: ':dagger')
+    compile project(path: ':dagger-android')
+    compile project(path: ':dagger-android-support')
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:design:25.2.0'
     compile 'com.google.code.gson:gson:2.8.0'
@@ -36,8 +39,9 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 
-    compile 'com.google.dagger:dagger:2.9'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
+    compile 'javax.inject:javax.inject:1'
+    //compile 'com.google.dagger:dagger:2.10-rc1'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.10-rc1'
 
     annotationProcessor 'com.github.fabioCollini.lifecyclebinder:lifecyclebinder-processor:0.4beta1'
     compile 'com.github.fabioCollini.lifecyclebinder:lifecyclebinder-lib:0.4beta1'
@@ -52,7 +56,7 @@ dependencies {
     testCompile 'org.assertj:assertj-core:2.5.0'
     testCompile 'com.github.fabioCollini:DaggerMock:0.6.4'
 
-    androidTestAnnotationProcessor 'com.google.dagger:dagger-compiler:2.9'
+    androidTestAnnotationProcessor 'com.google.dagger:dagger-compiler:2.10-rc1'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     androidTestCompile 'com.github.fabioCollini:DaggerMock:0.6.4'
     androidTestCompile 'org.mockito:mockito-android:2.6.2'
