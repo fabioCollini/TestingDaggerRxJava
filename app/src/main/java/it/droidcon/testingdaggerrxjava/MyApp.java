@@ -29,6 +29,7 @@ public class MyApp extends Application implements HasDispatchingActivityInjector
 
     @VisibleForTesting public void setComponent(ApplicationComponent component) {
         this.component = component;
+        component.inject(this);
     }
 
     @Override public DispatchingAndroidInjector<Activity> activityInjector() {
