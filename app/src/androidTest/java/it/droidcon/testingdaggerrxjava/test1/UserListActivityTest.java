@@ -21,7 +21,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static it.droidcon.testingdaggerrxjava.TestUtils.getAppFromInstrumentation;
 import static org.mockito.Mockito.when;
 
-public class EndToEndTest {
+public class UserListActivityTest {
   @Rule public final ActivityTestRule<UserListActivity> rule =
       new ActivityTestRule<>(UserListActivity.class, false, false);
 
@@ -36,22 +36,22 @@ public class EndToEndTest {
     applicationComponent.inject(this);
   }
 
-  //...
-
   @Test public void shouldDisplayUsers() {
     when(stackOverflowService.getTopUsers()).thenReturn(Observable.fromArray(
-            User.create(1, 50, "user1"),
-            User.create(2, 30, "user2")
-    ).toList());
+        User.create(1, 50, "user1"),
+        User.create(2, 30, "user2")
+    ).doOnNext(a -> {
+      Thread.sleep(300);
+    }).toList());
 
     when(stackOverflowService.getBadges(1)).thenReturn(
-            Single.just(Badge.createList("badge1")));
+        Single.just(Badge.createList("badge1")));
     when(stackOverflowService.getBadges(2)).thenReturn(
-            Single.just(Badge.createList("badge2", "badge3")));
+        Single.just(Badge.createList("badge2", "badge3")));
 
     rule.launchActivity(null);
 
     onView(withId(R.id.text)).check(matches(withText(
-        "50 user1\nbadge1\n\n30 user2\nbadge2, badge3")));
+        "50 user1 - badge1\n\n30 user2 - badge2, badge3")));
   }
 }

@@ -14,7 +14,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-public class EndToEndTest {
+public class UserListActivityTest {
     @Rule public final ActivityTestRule<UserListActivity> rule = new ActivityTestRule<>(UserListActivity.class, false, false);
 
     @Rule public final EspressoRule espressoRule = new EspressoRule();
@@ -26,6 +26,6 @@ public class EndToEndTest {
     @Test public void shouldDisplayUsers() {
         rule.launchActivity(null);
 
-        onView(withId(R.id.text)).check(matches(withText("50 user1\nbadge1\n\n30 user2\nbadge2, badge3")));
+        onView(withId(R.id.text)).check(matches(withText("50 user1 - badge1\n\n30 user2 - badge2, badge3")));
     }
 }

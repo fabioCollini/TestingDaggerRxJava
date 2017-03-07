@@ -26,6 +26,9 @@ public class UserInteractorTest {
   @Rule public MockitoRule mockitoRule =
       MockitoJUnit.rule();
 
+  //@Rule public TrampolineSchedulerRule schedulerRule =
+  //    new TrampolineSchedulerRule();
+
   @Rule public TestSchedulerRule schedulerRule =
       new TestSchedulerRule();
 
@@ -43,14 +46,25 @@ when(stackOverflowService.getTopUsers()).thenReturn(
 
 when(stackOverflowService.getBadges(1)).thenReturn(
     Single.just(Badge.createList("badge1"))
-        .delay(2, TimeUnit.SECONDS));
+    .delay(2, TimeUnit.SECONDS)
+);
 when(stackOverflowService.getBadges(2)).thenReturn(
     Single.just(Badge.createList("badge2", "badge3"))
-        .delay(1, TimeUnit.SECONDS));
+    .delay(1, TimeUnit.SECONDS)
+);
 
-TestObserver<List<UserStats>> testObserver = userInteractor.loadUsers().test();
+TestObserver<List<UserStats>> testObserver =
+    userInteractor.loadUsers().test();
 
-schedulerRule.getTestScheduler().advanceTimeBy(2, TimeUnit.SECONDS);
+schedulerRule.getTestScheduler()
+    .advanceTimeBy(2, TimeUnit.SECONDS);
+
+//testObserver
+//    .assertNoErrors()
+//    .assertValue(Arrays.asList(
+//        UserStats.create(1, 50, "user1", "badge1"),
+//        UserStats.create(2, 30, "user2", "badge2", "badge3")
+//    ));
 
 testObserver
     .assertNoErrors()

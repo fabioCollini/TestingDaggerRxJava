@@ -17,6 +17,7 @@ public class UserListPresenter {
   }
 
   public void reloadUserList() {
+    //...
     userInteractor
         .loadUsers()
         .flattenAsObservable(l -> l)

@@ -11,5 +11,5 @@ import javax.inject.Singleton;
     TestStackOverflowServiceModule.class
 })
 public interface TestApplicationComponent extends ApplicationComponent {
-  void inject(EndToEndTest endToEndTest);
+  void inject(UserListActivityTest userListActivityTest);
 }

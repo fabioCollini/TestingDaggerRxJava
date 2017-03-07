@@ -17,7 +17,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.mockito.Mockito.when;
 
-public class EndToEndTest {
+public class UserListActivityTest {
   @Rule public ActivityTestRule<UserListActivity> rule =
       new ActivityTestRule<>(UserListActivity.class, false, false);
 
@@ -37,6 +37,6 @@ public class EndToEndTest {
     rule.launchActivity(null);
 
     onView(withId(R.id.text)).check(matches(withText(
-        "50 user1\nbadge1\n\n30 user2\nbadge2, badge3")));
+        "50 user1 - badge1\n\n30 user2 - badge2, badge3")));
   }
 }

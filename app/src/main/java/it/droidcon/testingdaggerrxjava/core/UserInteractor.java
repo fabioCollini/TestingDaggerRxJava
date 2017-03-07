@@ -16,9 +16,12 @@ public class UserInteractor {
     return service.getTopUsers()
         .flattenAsObservable(l -> l)
         .take(5)
-        .concatMapEager(user -> service.getBadges(user.id())
-            .subscribeOn(Schedulers.io())
-            .map(badges -> UserStats.create(user, badges)).toObservable())
+        .concatMapEager(user ->
+            service.getBadges(user.id())
+                .subscribeOn(Schedulers.io())
+                .map(badges -> UserStats.create(user, badges))
+                .toObservable()
+        )
         .toList();
   }
 }

@@ -47,6 +47,6 @@ public abstract class UserStats {
     }
 
     @Override public String toString() {
-        return reputation() + " " + name() + "\n" + join(badges(), ", ");
+        return reputation() + " " + name() + " - " + join(badges(), ", ");
     }
 }

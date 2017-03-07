@@ -12,5 +12,5 @@ import javax.inject.Singleton;
 })
 public interface TestApplicationComponent
     extends ApplicationComponent {
-  void inject(EndToEndTest endToEndTest);
+  void inject(UserListActivityTest userListActivityTest);
 }

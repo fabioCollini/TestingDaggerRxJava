@@ -1,4 +1,4 @@
-package it.droidcon.testingdaggerrxjava.test4;
+package it.droidcon.testingdaggerrxjava.test3;
 
 import android.support.test.rule.ActivityTestRule;
 import io.reactivex.Observable;
@@ -7,16 +7,13 @@ import it.droidcon.testingdaggerrxjava.R;
 import it.droidcon.testingdaggerrxjava.core.UserInteractor;
 import it.droidcon.testingdaggerrxjava.core.UserStats;
 import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService;
-import it.droidcon.testingdaggerrxjava.dagger.ApplicationComponent;
-import it.droidcon.testingdaggerrxjava.dagger.DaggerApplicationComponent;
 import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule;
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity;
+import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.Mockito;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -25,28 +22,27 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static it.droidcon.testingdaggerrxjava.TestUtils.getAppFromInstrumentation;
 import static org.mockito.Mockito.when;
 
-public class EndToEndTest {
+public class UserListActivityTest {
     @Rule public ActivityTestRule<UserListActivity> rule =
             new ActivityTestRule<>(UserListActivity.class, false, false);
 
     @Rule public EspressoRule espressoRule = new EspressoRule();
 
-    @Rule public final MockitoRule mockitoRule = MockitoJUnit.rule();
-
-    @Mock UserInteractor userInteractor;
+    @Inject UserInteractor userInteractor;
 
     @Before public void setUp() {
-        ApplicationComponent component =
-                DaggerApplicationComponent.builder()
+        TestApplicationComponent component =
+                DaggerTestApplicationComponent.builder()
                         .userInteractorModule(new UserInteractorModule() {
                             @Override
                             public UserInteractor provideUserInteractor(
-                                    StackOverflowService stackOverflowService) {
-                                return userInteractor;
+                                    StackOverflowService service) {
+                                return Mockito.mock(UserInteractor.class);
                             }
                         })
                         .build();
         getAppFromInstrumentation().setComponent(component);
+        component.inject(this);
     }
 
     @Test public void shouldDisplayUsers() {
@@ -59,6 +55,6 @@ public class EndToEndTest {
         rule.launchActivity(null);
 
         onView(withId(R.id.text)).check(matches(withText(
-                "50 user1\nbadge1\n\n30 user2\nbadge2, badge3")));
+                "50 user1 - badge1\n\n30 user2 - badge2, badge3")));
     }
 }

@@ -43,6 +43,6 @@ public class UserListPresenterTest {
     presenter.reloadUserList();
 
     verify(activity).updateText(
-        "50 user1\nbadge1\n\n30 user2\nbadge2, badge3");
+        "50 user1 - badge1\n\n30 user2 - badge2, badge3");
   }
 }
