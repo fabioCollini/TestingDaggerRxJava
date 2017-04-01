@@ -1,13 +1,15 @@
 package it.droidcon.testingdaggerrxjava;
 
-import dagger.Provides;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+
+import dagger.Provides;
 
 public class DaggerMockExample {
     public static class MyModule {

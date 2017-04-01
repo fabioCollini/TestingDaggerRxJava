@@ -1,5 +1,12 @@
 package it.droidcon.testingdaggerrxjava.test4;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.mockito.Mock;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
@@ -16,11 +23,6 @@ import it.droidcon.testingdaggerrxjava.dagger.StackOverflowServiceModule;
 import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule;
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity;
 import it.droidcon.testingdaggerrxjava.userlist.UserListPresenter;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import org.junit.Rule;
-import org.junit.Test;
-import org.mockito.Mock;
 
 import static it.droidcon.testingdaggerrxjava.PredicateUtils.check;
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -35,7 +37,8 @@ public class UserInteractorDaggerMockTest {
 
     @Mock StackOverflowService stackOverflowService;
 
-    @InjectFromComponent({ UserListActivity.class, UserListPresenter.class }) UserInteractor userInteractor;
+    @InjectFromComponent({UserListActivity.class, UserListPresenter.class})
+    UserInteractor userInteractor;
 
     @Test
     public void shouldLoadUsers() throws Exception {
