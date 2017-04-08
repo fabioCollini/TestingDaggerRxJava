@@ -1,8 +1,14 @@
 package it.droidcon.testingdaggerrxjava.test4;
 
 import android.support.test.rule.ActivityTestRule;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mockito.Mockito;
+
 import io.reactivex.Observable;
-import it.droidcon.testingdaggerrxjava.EspressoRule;
+import it.droidcon.testingdaggerrxjava.AsyncTaskSchedulerRule;
 import it.droidcon.testingdaggerrxjava.R;
 import it.droidcon.testingdaggerrxjava.core.UserInteractor;
 import it.droidcon.testingdaggerrxjava.core.UserStats;
@@ -11,10 +17,6 @@ import it.droidcon.testingdaggerrxjava.dagger.ApplicationComponent;
 import it.droidcon.testingdaggerrxjava.dagger.DaggerApplicationComponent;
 import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule;
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.mockito.Mockito;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -27,7 +29,7 @@ public class UserListActivityTest1 {
 @Rule public ActivityTestRule<UserListActivity> rule =
     new ActivityTestRule<>(UserListActivity.class, false, false);
 
-@Rule public EspressoRule espressoRule = new EspressoRule();
+@Rule public AsyncTaskSchedulerRule asyncTaskSchedulerRule = new AsyncTaskSchedulerRule();
 
 private UserInteractor userInteractor = Mockito.mock(UserInteractor.class);
 

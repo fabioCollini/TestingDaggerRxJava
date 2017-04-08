@@ -10,7 +10,7 @@ import io.reactivex.Scheduler;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
 
-public class EspressoRule implements TestRule {
+public class AsyncTaskSchedulerRule implements TestRule {
 
     private final Scheduler asyncTaskScheduler =
             Schedulers.from(AsyncTask.THREAD_POOL_EXECUTOR);

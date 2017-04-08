@@ -1,18 +1,21 @@
 package it.droidcon.testingdaggerrxjava.test1;
 
 import android.support.test.rule.ActivityTestRule;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.Single;
-import it.droidcon.testingdaggerrxjava.EspressoRule;
+import it.droidcon.testingdaggerrxjava.AsyncTaskSchedulerRule;
 import it.droidcon.testingdaggerrxjava.R;
 import it.droidcon.testingdaggerrxjava.core.gson.Badge;
 import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService;
 import it.droidcon.testingdaggerrxjava.core.gson.User;
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity;
-import javax.inject.Inject;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -25,7 +28,7 @@ public class UserListActivityTest {
   @Rule public final ActivityTestRule<UserListActivity> rule =
       new ActivityTestRule<>(UserListActivity.class, false, false);
 
-  @Rule public final EspressoRule espressoRule = new EspressoRule();
+  @Rule public final AsyncTaskSchedulerRule asyncTaskSchedulerRule = new AsyncTaskSchedulerRule();
 
   @Inject StackOverflowService stackOverflowService;
 
