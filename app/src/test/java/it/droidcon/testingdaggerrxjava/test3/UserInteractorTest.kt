@@ -25,16 +25,16 @@ class UserInteractorTest {
     @Test fun shouldLoadUsers() {
         `when`(stackOverflowService.getTopUsers()).thenReturn(
                 Observable.fromArray(
-                        User.create(1, 50, "user1"),
-                        User.create(2, 30, "user2")
+                        User(1, 50, "user1"),
+                        User(2, 30, "user2")
                 ).toList())
 
         `when`(stackOverflowService.getBadges(1)).thenReturn(
-                Single.just(arrayOf("badge1").map { Badge(it) })
+                Single.just(listOf(Badge("badge1")))
                 //.doOnSuccess(l->Thread.sleep(100))
         )
         `when`(stackOverflowService.getBadges(2)).thenReturn(
-                Single.just(arrayOf("badge2", "badge3").map { Badge(it) })
+                Single.just(listOf("badge2", "badge3").map { Badge(it) })
         )
 
         val users = userInteractor.loadUsers().blockingGet()

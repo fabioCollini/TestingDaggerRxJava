@@ -8,11 +8,4 @@ data class User(
         val reputation: Int,
         @SerializedName("display_name")
         val name: String
-) {
-    companion object {
-
-        fun create(id: Int, reputation: Int, name: String): User {
-            return User(id, reputation, name)
-        }
-    }
-}
+)

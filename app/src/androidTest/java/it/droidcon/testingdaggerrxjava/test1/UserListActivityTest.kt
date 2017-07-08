@@ -35,14 +35,14 @@ class UserListActivityTest {
 
     @Test fun shouldDisplayUsers() {
         `when`(stackOverflowService.getTopUsers()).thenReturn(Observable.fromArray(
-                User.create(1, 50, "user1"),
-                User.create(2, 30, "user2")
+                User(1, 50, "user1"),
+                User(2, 30, "user2")
         ).doOnNext { Thread.sleep(300) }.toList())
 
         `when`(stackOverflowService.getBadges(1)).thenReturn(
-                Single.just(Badge.createList("badge1")))
+                Single.just(listOf(Badge("badge1"))))
         `when`(stackOverflowService.getBadges(2)).thenReturn(
-                Single.just(Badge.createList("badge2", "badge3")))
+                Single.just(listOf("badge2", "badge3").map { Badge(it) }))
 
         rule.launchActivity(null)
 

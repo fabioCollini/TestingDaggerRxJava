@@ -1,24 +1,20 @@
-package it.droidcon.testingdaggerrxjava.test2
+package it.droidcon.testingdaggerrxjava.test1
 
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.never
+import com.nhaarman.mockito_kotlin.verify
 import io.reactivex.Observable
-import it.cosenonjaviste.daggermock.DaggerMockRule
-import it.cosenonjaviste.daggermock.InjectFromComponent
 import it.droidcon.testingdaggerrxjava.TrampolineSchedulerRule
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.UserStats
-import it.droidcon.testingdaggerrxjava.dagger.ApplicationComponent
-import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import it.droidcon.testingdaggerrxjava.userlist.UserListPresenter
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
 
-class UserListPresenterTest {
-
-    @get:Rule var daggerMockRule = DaggerMockRule(ApplicationComponent::class.java, UserInteractorModule())
+class UserListPresenterNoMockitoRuleTest {
 
     @get:Rule var schedulerRule = TrampolineSchedulerRule()
 
@@ -26,7 +22,7 @@ class UserListPresenterTest {
 
     val activity: UserListActivity = mock()
 
-    @InjectFromComponent(UserListActivity::class) lateinit var presenter: UserListPresenter
+    val presenter = UserListPresenter(userInteractor, activity)
 
     @Test fun shouldLoadUsers() {
         `when`(userInteractor.loadUsers()).thenReturn(
@@ -36,6 +32,8 @@ class UserListPresenterTest {
                 ).toList())
 
         presenter.reloadUserList()
+
+        verify(activity, never()).showError(any())
 
         verify(activity).updateText(
                 "50 user1 - badge1\n\n30 user2 - badge2, badge3")

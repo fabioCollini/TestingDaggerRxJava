@@ -1,6 +1,7 @@
 package it.droidcon.testingdaggerrxjava.test7
 
 import android.support.test.espresso.Espresso.onView
+import android.support.test.espresso.ViewInteraction
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
@@ -26,5 +27,10 @@ class UserListActivityTest {
         rule.launchActivity(null)
 
         onView(withId(R.id.text)).check(matches(withText("50 user1 - badge1\n\n30 user2 - badge2, badge3")))
+
+        R.id.text hasText "50 user1 - badge1\n\n30 user2 - badge2, badge3"
     }
 }
+
+infix fun Int.hasText(text: String): ViewInteraction =
+        onView(withId(this)).check(matches(withText(text)))

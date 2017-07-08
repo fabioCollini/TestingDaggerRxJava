@@ -1,7 +1,6 @@
 package it.droidcon.testingdaggerrxjava.test1
 
 import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import io.reactivex.Observable
@@ -13,7 +12,8 @@ import it.droidcon.testingdaggerrxjava.userlist.UserListPresenter
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.InjectMocks
-import org.mockito.Mockito
+import org.mockito.Mock
+import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnit
 
 class UserListPresenterTest {
@@ -22,15 +22,14 @@ class UserListPresenterTest {
 
     @get:Rule var schedulerRule = TrampolineSchedulerRule()
 
-    val userInteractor: UserInteractor = mock()
+    @Mock lateinit var userInteractor: UserInteractor
 
-    val activity: UserListActivity = mock()
+    @Mock lateinit var activity: UserListActivity
 
     @InjectMocks lateinit var presenter: UserListPresenter
 
-    @Test
-    fun shouldLoadUsers() {
-        Mockito.`when`(userInteractor.loadUsers()).thenReturn(
+    @Test fun shouldLoadUsers() {
+        `when`(userInteractor.loadUsers()).thenReturn(
                 Observable.fromArray(
                         UserStats(1, 50, "user1", listOf("badge1")),
                         UserStats(2, 30, "user2", listOf("badge2", "badge3"))

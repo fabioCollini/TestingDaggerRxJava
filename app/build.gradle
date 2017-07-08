@@ -26,8 +26,8 @@ dependencies {
 
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.okhttp3:okhttp:3.8.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
@@ -39,14 +39,14 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.8.47'
     testCompile 'org.assertj:assertj-core:2.5.0'
-    testCompile 'com.github.fabioCollini:DaggerMock:c36fc62ccd'
+    testCompile 'com.github.fabioCollini:DaggerMock:0.7.0'
     testCompile('com.nhaarman:mockito-kotlin-kt1.1:1.5.0') {
         exclude group: 'org.jetbrains.kotlin'
     }
 
-    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.9'
+    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.10'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
-    androidTestCompile 'com.github.fabioCollini:DaggerMock:c36fc62ccd'
+    androidTestCompile 'com.github.fabioCollini:DaggerMock:0.7.0'
     androidTestCompile 'org.mockito:mockito-android:2.8.9'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'

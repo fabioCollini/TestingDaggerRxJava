@@ -35,8 +35,8 @@ class UserInteractorDaggerMockTest {
 
     @Test fun shouldLoadUsers() {
         `when`(stackOverflowService.getTopUsers()).thenReturn(Observable.fromArray(
-                User.create(1, 50, "user1"),
-                User.create(2, 30, "user2")
+                User(1, 50, "user1"),
+                User(2, 30, "user2")
         ).toList())
 
         `when`(stackOverflowService.getBadges(1)).thenReturn(
