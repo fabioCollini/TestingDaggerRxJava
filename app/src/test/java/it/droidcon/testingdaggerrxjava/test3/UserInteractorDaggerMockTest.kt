@@ -50,8 +50,8 @@ class UserInteractorDaggerMockTest {
                 .test()
                 .assertNoErrors()
                 .assertValue(Arrays.asList(
-                        UserStats.create(1, 50, "user1", "badge1"),
-                        UserStats.create(2, 30, "user2", "badge2", "badge3")
+                        UserStats(1, 50, "user1", listOf("badge1")),
+                        UserStats(2, 30, "user2", listOf("badge2", "badge3"))
                 ))
 
         val l = userInteractor.loadUsers()
@@ -60,8 +60,8 @@ class UserInteractorDaggerMockTest {
                 .values()
 
         assertThat(l[0]).containsExactly(
-                UserStats.create(1, 50, "user1", "badge1"),
-                UserStats.create(2, 30, "user2", "badge2", "badge3")
+                UserStats(1, 50, "user1", listOf("badge1")),
+                UserStats(2, 30, "user2", listOf("badge2", "badge3"))
         )
     }
 }
