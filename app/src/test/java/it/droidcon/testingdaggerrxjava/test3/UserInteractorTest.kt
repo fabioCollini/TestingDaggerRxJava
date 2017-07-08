@@ -16,7 +16,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnit
 
 class UserInteractorTest {
-    @get:Rule var mockitoRule = MockitoJUnit.rule()
+    @get:Rule val mockitoRule = MockitoJUnit.rule()
 
     val stackOverflowService: StackOverflowService = mock()
 

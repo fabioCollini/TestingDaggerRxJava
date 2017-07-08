@@ -18,9 +18,9 @@ import org.mockito.junit.MockitoJUnit
 
 class UserListPresenterTest {
 
-    @get:Rule var mockitoRule = MockitoJUnit.rule()
+    @get:Rule val mockitoRule = MockitoJUnit.rule()
 
-    @get:Rule var schedulerRule = TrampolineSchedulerRule()
+    @get:Rule val schedulerRule = TrampolineSchedulerRule()
 
     @Mock lateinit var userInteractor: UserInteractor
 

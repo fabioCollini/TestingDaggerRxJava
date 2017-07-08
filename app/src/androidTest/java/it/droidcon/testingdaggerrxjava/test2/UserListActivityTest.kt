@@ -19,9 +19,9 @@ import org.mockito.Mockito.`when`
 import javax.inject.Inject
 
 class UserListActivityTest {
-    @get:Rule var rule = ActivityTestRule(UserListActivity::class.java, false, false)
+    @get:Rule val rule = ActivityTestRule(UserListActivity::class.java, false, false)
 
-    @get:Rule var asyncTaskSchedulerRule = AsyncTaskSchedulerRule()
+    @get:Rule val asyncTaskSchedulerRule = AsyncTaskSchedulerRule()
 
     @Inject lateinit var userInteractor: UserInteractor
 

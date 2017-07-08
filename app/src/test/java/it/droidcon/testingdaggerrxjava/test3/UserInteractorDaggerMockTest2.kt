@@ -1,10 +1,8 @@
 package it.droidcon.testingdaggerrxjava.test3
 
 import com.nhaarman.mockito_kotlin.mock
-import io.reactivex.Observable
-import io.reactivex.Single
-import it.cosenonjaviste.daggermock.DaggerMockRule
 import it.cosenonjaviste.daggermock.InjectFromComponent
+import it.droidcon.testingdaggerrxjava.DaggerMock
 import it.droidcon.testingdaggerrxjava.TrampolineSchedulerRule
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.UserStats
@@ -16,13 +14,13 @@ import it.droidcon.testingdaggerrxjava.dagger.StackOverflowServiceModule
 import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import it.droidcon.testingdaggerrxjava.userlist.UserListPresenter
+import it.droidcon.testingdaggerrxjava.willReturnJust
 import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.`when`
 
-class UserInteractorDaggerMockTest {
-    @get:Rule val daggerMockRule = DaggerMockRule(ApplicationComponent::class.java, UserInteractorModule(), StackOverflowServiceModule())
+class UserInteractorDaggerMockTest2 {
+    @get:Rule val daggerMockRule = DaggerMock.rule<ApplicationComponent>(UserInteractorModule(), StackOverflowServiceModule())
             .providesMock(UserListActivity::class.java)
 
     @get:Rule val schedulerRule = TrampolineSchedulerRule()
@@ -33,15 +31,14 @@ class UserInteractorDaggerMockTest {
     lateinit var userInteractor: UserInteractor
 
     @Test fun shouldLoadUsers() {
-        `when`(stackOverflowService.getTopUsers()).thenReturn(Observable.fromArray(
-                User(1, 50, "user1"),
-                User(2, 30, "user2")
-        ).toList())
+        stackOverflowService.getTopUsers() willReturnJust
+                listOf(User(1, 50, "user1"), User(2, 30, "user2"))
 
-        `when`(stackOverflowService.getBadges(1)).thenReturn(
-                Single.just(listOf(Badge("badge1"))))
-        `when`(stackOverflowService.getBadges(2)).thenReturn(
-                Single.just(arrayOf("badge2", "badge3").map { Badge(it) }))
+        stackOverflowService.getBadges(1) willReturnJust
+                listOf(Badge("badge1"))
+
+        stackOverflowService.getBadges(2) willReturnJust
+                listOf(Badge("badge2"), Badge("badge3"))
 
         userInteractor.loadUsers()
                 .test()

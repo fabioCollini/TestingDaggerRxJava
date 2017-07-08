@@ -18,9 +18,9 @@ import org.mockito.junit.MockitoJUnit
 import java.util.concurrent.TimeUnit
 
 class UserInteractorTest {
-    @get:Rule var mockitoRule = MockitoJUnit.rule()
+    @get:Rule val mockitoRule = MockitoJUnit.rule()
 
-    @get:Rule var schedulerRule = TestSchedulerRule()
+    @get:Rule val schedulerRule = TestSchedulerRule()
 
     val stackOverflowService: StackOverflowService = mock()
 

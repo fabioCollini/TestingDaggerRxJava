@@ -23,10 +23,10 @@ import org.mockito.Mockito.`when`
 import java.util.concurrent.TimeUnit
 
 class UserInteractorDaggerMockTest {
-    @get:Rule var daggerMockRule = DaggerMockRule(ApplicationComponent::class.java, UserInteractorModule(), StackOverflowServiceModule())
+    @get:Rule val daggerMockRule = DaggerMockRule(ApplicationComponent::class.java, UserInteractorModule(), StackOverflowServiceModule())
             .providesMock(UserListActivity::class.java)
 
-    @get:Rule var schedulerRule = TestSchedulerRule()
+    @get:Rule val schedulerRule = TestSchedulerRule()
 
     val stackOverflowService: StackOverflowService = mock()
 

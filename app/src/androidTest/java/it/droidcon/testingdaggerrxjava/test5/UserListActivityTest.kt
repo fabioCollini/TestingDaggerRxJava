@@ -21,11 +21,11 @@ import org.junit.Test
 import org.mockito.Mockito.`when`
 
 class UserListActivityTest {
-    @get:Rule var rule = ActivityTestRule(UserListActivity::class.java, false, false)
+    @get:Rule val rule = ActivityTestRule(UserListActivity::class.java, false, false)
 
-    @get:Rule var asyncTaskSchedulerRule = AsyncTaskSchedulerRule()
+    @get:Rule val asyncTaskSchedulerRule = AsyncTaskSchedulerRule()
 
-    @get:Rule var daggerMockRule = DaggerMockRule(
+    @get:Rule val daggerMockRule = DaggerMockRule(
             ApplicationComponent::class.java,
             UserInteractorModule()
     ).set { component -> appFromInstrumentation.component = component }

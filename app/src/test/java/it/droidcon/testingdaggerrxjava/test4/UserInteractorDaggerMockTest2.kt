@@ -1,11 +1,10 @@
-package it.droidcon.testingdaggerrxjava.test3
+package it.droidcon.testingdaggerrxjava.test4
 
 import com.nhaarman.mockito_kotlin.mock
-import io.reactivex.Observable
 import io.reactivex.Single
-import it.cosenonjaviste.daggermock.DaggerMockRule
 import it.cosenonjaviste.daggermock.InjectFromComponent
-import it.droidcon.testingdaggerrxjava.TrampolineSchedulerRule
+import it.droidcon.testingdaggerrxjava.DaggerMock
+import it.droidcon.testingdaggerrxjava.TestSchedulerRule
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.UserStats
 import it.droidcon.testingdaggerrxjava.core.gson.Badge
@@ -16,16 +15,18 @@ import it.droidcon.testingdaggerrxjava.dagger.StackOverflowServiceModule
 import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import it.droidcon.testingdaggerrxjava.userlist.UserListPresenter
+import it.droidcon.testingdaggerrxjava.willReturn
+import it.droidcon.testingdaggerrxjava.willReturnJust
 import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.`when`
+import java.util.concurrent.TimeUnit
 
-class UserInteractorDaggerMockTest {
-    @get:Rule val daggerMockRule = DaggerMockRule(ApplicationComponent::class.java, UserInteractorModule(), StackOverflowServiceModule())
+class UserInteractorDaggerMockTest2 {
+    @get:Rule val daggerMockRule = DaggerMock.rule<ApplicationComponent>(UserInteractorModule(), StackOverflowServiceModule())
             .providesMock(UserListActivity::class.java)
 
-    @get:Rule val schedulerRule = TrampolineSchedulerRule()
+    @get:Rule val schedulerRule = TestSchedulerRule()
 
     val stackOverflowService: StackOverflowService = mock()
 
@@ -33,29 +34,20 @@ class UserInteractorDaggerMockTest {
     lateinit var userInteractor: UserInteractor
 
     @Test fun shouldLoadUsers() {
-        `when`(stackOverflowService.getTopUsers()).thenReturn(Observable.fromArray(
-                User(1, 50, "user1"),
-                User(2, 30, "user2")
-        ).toList())
+        stackOverflowService.getTopUsers() willReturnJust
+                listOf(User(1, 50, "user1"), User(2, 30, "user2"))
 
-        `when`(stackOverflowService.getBadges(1)).thenReturn(
-                Single.just(listOf(Badge("badge1"))))
-        `when`(stackOverflowService.getBadges(2)).thenReturn(
-                Single.just(arrayOf("badge2", "badge3").map { Badge(it) }))
+        stackOverflowService.getBadges(1) willReturn
+                Single.just(listOf(Badge("badge1"))).delay(2, TimeUnit.SECONDS)
 
-        userInteractor.loadUsers()
-                .test()
-                .assertNoErrors()
-                .assertValue(listOf(
-                        UserStats(1, 50, "user1", listOf("badge1")),
-                        UserStats(2, 30, "user2", listOf("badge2", "badge3"))
-                ))
+        stackOverflowService.getBadges(2) willReturn
+                Single.just(listOf(Badge("badge2"), Badge("badge3"))).delay(1, TimeUnit.SECONDS)
 
-        val l = userInteractor.loadUsers()
-                .test()
-                .assertNoErrors()
-                .values()
+        val testObserver = userInteractor.loadUsers().test()
 
+        schedulerRule.testScheduler.advanceTimeBy(2, TimeUnit.SECONDS)
+
+        val l = testObserver.assertNoErrors().values()
         assertThat(l[0]).containsExactly(
                 UserStats(1, 50, "user1", listOf("badge1")),
                 UserStats(2, 30, "user2", listOf("badge2", "badge3"))
