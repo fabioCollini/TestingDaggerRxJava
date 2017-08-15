@@ -23,8 +23,9 @@ import org.junit.Test
 import java.util.concurrent.TimeUnit
 
 class UserInteractorDaggerMockTest2 {
-    @get:Rule val daggerMockRule = DaggerMock.rule<ApplicationComponent>(UserInteractorModule(), StackOverflowServiceModule())
-            .providesMock(UserListActivity::class.java)
+    @get:Rule val daggerMockRule = DaggerMock.rule<ApplicationComponent>(UserInteractorModule(), StackOverflowServiceModule()) {
+        providesMock<UserListActivity>()
+    }
 
     @get:Rule val schedulerRule = TestSchedulerRule()
 

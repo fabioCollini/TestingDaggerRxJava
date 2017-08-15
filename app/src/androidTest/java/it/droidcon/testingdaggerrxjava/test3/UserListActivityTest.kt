@@ -5,6 +5,7 @@ import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.rule.ActivityTestRule
+import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.Observable
 import it.droidcon.testingdaggerrxjava.AsyncTaskSchedulerRule
 import it.droidcon.testingdaggerrxjava.R
@@ -17,7 +18,6 @@ import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import javax.inject.Inject
 
@@ -32,8 +32,8 @@ class UserListActivityTest {
         val component = DaggerTestApplicationComponent.builder()
                 .userInteractorModule(object : UserInteractorModule() {
                     override fun provideUserInteractor(
-                            service: StackOverflowService): UserInteractor =
-                            Mockito.mock(UserInteractor::class.java)
+                            stackOverflowService: StackOverflowService
+                    ): UserInteractor = mock()
                 })
                 .build()
         appFromInstrumentation.component = component
