@@ -21,8 +21,7 @@ class MockPresenterTest {
 
     @Mock lateinit var presenter: UserListPresenter
 
-    @Test
-    fun testOnCreate() {
+    @Test fun testOnCreate() {
         rule.launchActivity(null)
 
         onView(withId(R.id.text)).check(matches(withText("")))

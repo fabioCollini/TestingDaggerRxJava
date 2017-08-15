@@ -21,7 +21,7 @@ class UserListActivity : AppCompatActivity() {
     }
 
     fun updateText(s: String) {
-        (findViewById(R.id.text) as TextView).text = s
+        findViewById<TextView>(R.id.text).text = s
     }
 
     fun showError(t: Throwable) =
