@@ -1,5 +1,7 @@
 package it.droidcon.testingdaggerrxjava.test4
 
+import assertk.assert
+import assertk.assertions.containsExactly
 import com.nhaarman.mockito_kotlin.mock
 import it.droidcon.testingdaggerrxjava.TestSchedulerRule
 import it.droidcon.testingdaggerrxjava.after
@@ -10,7 +12,6 @@ import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService
 import it.droidcon.testingdaggerrxjava.core.gson.User
 import it.droidcon.testingdaggerrxjava.seconds
 import it.droidcon.testingdaggerrxjava.willReturnJust
-import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
 import java.util.concurrent.TimeUnit
@@ -46,7 +47,7 @@ class UserInteractorTest {
                 .advanceTimeBy(2, TimeUnit.SECONDS)
 
         val l = testObserver.assertNoErrors().values()
-        assertThat(l[0]).containsExactly(
+        assert(l[0]).containsExactly(
                 UserStats(1, 50, "user1", listOf("badge1")),
                 UserStats(2, 30, "user2", listOf("badge2", "badge3"))
         )

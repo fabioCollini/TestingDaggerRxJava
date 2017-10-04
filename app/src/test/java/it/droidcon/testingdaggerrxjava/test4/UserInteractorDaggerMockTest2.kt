@@ -1,5 +1,7 @@
 package it.droidcon.testingdaggerrxjava.test4
 
+import assertk.assert
+import assertk.assertions.containsExactly
 import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.Single
 import it.cosenonjaviste.daggermock.DaggerMock
@@ -17,7 +19,6 @@ import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import it.droidcon.testingdaggerrxjava.userlist.UserListPresenter
 import it.droidcon.testingdaggerrxjava.willReturn
 import it.droidcon.testingdaggerrxjava.willReturnJust
-import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
 import java.util.concurrent.TimeUnit
@@ -54,7 +55,7 @@ class UserInteractorDaggerMockTest2 {
         schedulerRule.testScheduler.advanceTimeBy(2, TimeUnit.SECONDS)
 
         val l = testObserver.assertNoErrors().values()
-        assertThat(l[0]).containsExactly(
+        assert(l[0]).containsExactly(
                 UserStats(1, 50, "user1", listOf("badge1")),
                 UserStats(2, 30, "user2", listOf("badge2", "badge3"))
         )
