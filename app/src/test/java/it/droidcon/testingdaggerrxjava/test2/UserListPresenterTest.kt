@@ -2,8 +2,8 @@ package it.droidcon.testingdaggerrxjava.test2
 
 import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.Observable
+import it.cosenonjaviste.daggermock.DaggerMock
 import it.cosenonjaviste.daggermock.InjectFromComponent
-import it.droidcon.testingdaggerrxjava.DaggerMock
 import it.droidcon.testingdaggerrxjava.TrampolineSchedulerRule
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.UserStats

@@ -1,46 +1,44 @@
 package it.droidcon.testingdaggerrxjava.test4
 
 import com.nhaarman.mockito_kotlin.mock
-import io.reactivex.Observable
-import io.reactivex.Single
 import it.droidcon.testingdaggerrxjava.TestSchedulerRule
+import it.droidcon.testingdaggerrxjava.after
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.UserStats
 import it.droidcon.testingdaggerrxjava.core.gson.Badge
 import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService
 import it.droidcon.testingdaggerrxjava.core.gson.User
+import it.droidcon.testingdaggerrxjava.seconds
+import it.droidcon.testingdaggerrxjava.willReturnJust
 import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.InjectMocks
-import org.mockito.Mockito.`when`
-import org.mockito.junit.MockitoJUnit
 import java.util.concurrent.TimeUnit
 
 class UserInteractorTest {
-    @get:Rule val mockitoRule = MockitoJUnit.rule()
-
-    @get:Rule val schedulerRule = TestSchedulerRule()
+    @get:Rule
+    val schedulerRule = TestSchedulerRule()
 
     val stackOverflowService: StackOverflowService = mock()
 
-    @InjectMocks lateinit var userInteractor: UserInteractor
+    val userInteractor = UserInteractor(stackOverflowService)
 
-    @Test fun shouldLoadUsers() {
-        `when`(stackOverflowService.getTopUsers()).thenReturn(
-                Observable.fromArray(
-                        User(1, 50, "user1"),
-                        User(2, 30, "user2")
-                ).toList())
+    @Test
+    fun shouldLoadUsers() {
+        stackOverflowService.getTopUsers() willReturnJust listOf(
+                User(1, 50, "user1"),
+                User(2, 30, "user2")
+        )
 
-        `when`(stackOverflowService.getBadges(1)).thenReturn(
-                Single.just(arrayOf("badge1").map { Badge(it) })
-                        .delay(2, TimeUnit.SECONDS)
-        )
-        `when`(stackOverflowService.getBadges(2)).thenReturn(
-                Single.just(arrayOf("badge2", "badge3").map { Badge(it) })
-                        .delay(1, TimeUnit.SECONDS)
-        )
+        stackOverflowService.getBadges(1) willReturnJust listOf(
+                Badge("badge1")
+        ) after 2.seconds()
+
+        stackOverflowService.getBadges(2) willReturnJust listOf(
+                Badge("badge2"),
+                Badge("badge3")
+        ) after 1.seconds()
+
 
         val testObserver = userInteractor.loadUsers().test()
 

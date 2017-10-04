@@ -9,4 +9,5 @@ import javax.inject.Singleton
 @Component(modules = arrayOf(TestUserInteractorModule::class, StackOverflowServiceModule::class))
 interface TestApplicationComponent : ApplicationComponent {
     fun inject(userListActivityTest: UserListActivityTest)
+    fun inject(userListActivityTest: UserListActivityTest2)
 }

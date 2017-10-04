@@ -5,8 +5,8 @@ import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.rule.ActivityTestRule
+import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.Observable
-import it.droidcon.testingdaggerrxjava.AsyncTaskSchedulerRule
 import it.droidcon.testingdaggerrxjava.R
 import it.droidcon.testingdaggerrxjava.appFromInstrumentation
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
@@ -18,26 +18,19 @@ import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mock
 import org.mockito.Mockito.`when`
-import org.mockito.junit.MockitoJUnit
 
 class UserListActivityTest {
     @get:Rule val rule = ActivityTestRule(UserListActivity::class.java, false, false)
 
-    @get:Rule val asyncTaskSchedulerRule = AsyncTaskSchedulerRule()
+    val userInteractor: UserInteractor = mock()
 
-    @get:Rule val mockitoRule = MockitoJUnit.rule()
-
-    @Mock lateinit var userInteractor: UserInteractor
-
-    @Before fun setUp() {
+    @Before
+    fun setUp() {
         val component = DaggerApplicationComponent.builder()
                 .userInteractorModule(object : UserInteractorModule() {
                     override fun provideUserInteractor(
-                            stackOverflowService: StackOverflowService): UserInteractor {
-                        return userInteractor
-                    }
+                            stackOverflowService: StackOverflowService) = userInteractor
                 })
                 .build()
         appFromInstrumentation.component = component

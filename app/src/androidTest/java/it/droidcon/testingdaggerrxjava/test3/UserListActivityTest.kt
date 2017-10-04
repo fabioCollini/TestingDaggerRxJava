@@ -7,7 +7,6 @@ import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.rule.ActivityTestRule
 import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.Observable
-import it.droidcon.testingdaggerrxjava.AsyncTaskSchedulerRule
 import it.droidcon.testingdaggerrxjava.R
 import it.droidcon.testingdaggerrxjava.appFromInstrumentation
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
@@ -23,8 +22,6 @@ import javax.inject.Inject
 
 class UserListActivityTest {
     @get:Rule val rule = ActivityTestRule(UserListActivity::class.java, false, false)
-
-    @get:Rule val asyncTaskSchedulerRule = AsyncTaskSchedulerRule()
 
     @Inject lateinit var userInteractor: UserInteractor
 

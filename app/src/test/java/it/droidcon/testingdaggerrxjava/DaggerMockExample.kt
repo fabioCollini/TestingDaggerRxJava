@@ -6,12 +6,15 @@ import org.mockito.Mockito
 
 class DaggerMockExample {
     class MyModule {
-        @Provides fun provideString() = "myString"
+        @Provides
+        fun provideString() = "myString"
 
-        @Provides fun provideInt() = 123
+        @Provides
+        fun provideInt() = 123
     }
 
-    @Test fun myTest() {
+    @Test
+    fun myTest() {
         val myModule = MyModule()
         val testFields = collectTestFields()
         val subclass = createSubclass(myModule, testFields)
@@ -19,11 +22,11 @@ class DaggerMockExample {
         println(subclass.provideInt())
     }
 
-    private fun <T : Any> createSubclass(module: T, testFields: Map<Class<*>, Any>): T {
-        return Mockito.mock(module.javaClass) { invocation ->
-            testFields[invocation.method.returnType] ?: invocation.method.invoke(module, *invocation.arguments)
-        }
-    }
+    private fun <T : Any> createSubclass(module: T, testFields: Map<Class<*>, Any>): T =
+            Mockito.mock(module.javaClass) { invocation ->
+                testFields[invocation.method.returnType]
+                        ?: invocation.method(module, *invocation.arguments)
+            }
 
     private fun collectTestFields() =
             mapOf(

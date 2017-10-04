@@ -7,10 +7,13 @@ import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.rule.ActivityTestRule
 import io.reactivex.Observable
 import io.reactivex.Single
-import it.droidcon.testingdaggerrxjava.AsyncTaskSchedulerRule
+import it.cosenonjaviste.daggermock.DaggerMock
 import it.droidcon.testingdaggerrxjava.R
+import it.droidcon.testingdaggerrxjava.appFromInstrumentation
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.UserStats
+import it.droidcon.testingdaggerrxjava.dagger.ApplicationComponent
+import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import org.junit.Rule
 import org.junit.Test
@@ -20,9 +23,7 @@ import org.mockito.Mockito.`when`
 class UserListActivityTest {
     @get:Rule val rule = ActivityTestRule(UserListActivity::class.java, false, false)
 
-    @get:Rule val asyncTaskSchedulerRule = AsyncTaskSchedulerRule()
-
-    @get:Rule val daggerMockRule = MyDaggerMockRule()
+    @get:Rule val daggerMockRule = myDaggerMockRule()
 
     @Mock lateinit var userInteractor: UserInteractor
 
@@ -38,4 +39,8 @@ class UserListActivityTest {
         onView(withId(R.id.text)).check(matches(withText(
                 "50 user1 - badge1\n\n30 user2 - badge2, badge3")))
     }
+}
+
+fun myDaggerMockRule() = DaggerMock.rule<ApplicationComponent>(UserInteractorModule()) {
+    set { appFromInstrumentation.component = it }
 }

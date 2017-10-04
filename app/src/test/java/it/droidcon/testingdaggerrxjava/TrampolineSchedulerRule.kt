@@ -10,10 +10,18 @@ class TrampolineSchedulerRule : TestWatcher() {
 
     override fun starting(description: Description?) {
         super.starting(description)
-        RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }
-        RxJavaPlugins.setComputationSchedulerHandler { Schedulers.trampoline() }
-        RxJavaPlugins.setNewThreadSchedulerHandler { Schedulers.trampoline() }
-        RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
+        RxJavaPlugins.setIoSchedulerHandler {
+            Schedulers.trampoline()
+        }
+        RxJavaPlugins.setComputationSchedulerHandler {
+            Schedulers.trampoline()
+        }
+        RxJavaPlugins.setNewThreadSchedulerHandler {
+            Schedulers.trampoline()
+        }
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler {
+            Schedulers.trampoline()
+        }
     }
 
     override fun finished(description: Description?) {
