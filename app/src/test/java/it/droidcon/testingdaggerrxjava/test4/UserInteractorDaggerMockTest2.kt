@@ -6,26 +6,21 @@ import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.Single
 import it.cosenonjaviste.daggermock.DaggerMock
 import it.cosenonjaviste.daggermock.InjectFromComponent
-import it.droidcon.testingdaggerrxjava.TestSchedulerRule
+import it.droidcon.testingdaggerrxjava.*
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.UserStats
 import it.droidcon.testingdaggerrxjava.core.gson.Badge
 import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService
 import it.droidcon.testingdaggerrxjava.core.gson.User
-import it.droidcon.testingdaggerrxjava.dagger.ApplicationComponent
-import it.droidcon.testingdaggerrxjava.dagger.StackOverflowServiceModule
-import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import it.droidcon.testingdaggerrxjava.userlist.UserListPresenter
-import it.droidcon.testingdaggerrxjava.willReturn
-import it.droidcon.testingdaggerrxjava.willReturnJust
 import org.junit.Rule
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
 class UserInteractorDaggerMockTest2 {
     @get:Rule
-    val daggerMockRule = DaggerMock.rule<ApplicationComponent>(UserInteractorModule(), StackOverflowServiceModule()) {
+    val daggerMockRule = DaggerMock.rule<TestApplicationComponent>(UserInteractorTestModule(), StackOverflowServiceTestModule()) {
         providesMock<UserListActivity>()
     }
 

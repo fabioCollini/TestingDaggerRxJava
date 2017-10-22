@@ -1,4 +1,4 @@
-package it.droidcon.testingdaggerrxjava.dagger
+package it.droidcon.testingdaggerrxjava
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -13,9 +13,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-@Module object StackOverflowServiceModule {
+@Module
+class StackOverflowServiceTestModule {
 
-    @JvmStatic @Provides @Singleton fun provideOkHttpClient(): OkHttpClient =
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(): OkHttpClient =
             OkHttpClient.Builder()
                     .addInterceptor { chain ->
                         var request = chain.request()
@@ -29,9 +32,9 @@ import javax.inject.Singleton
                     .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                     .build()
 
-    @JvmStatic @Provides @Singleton fun provideGson(): Gson = GsonBuilder().create()
+    @Provides @Singleton fun provideGson(): Gson = GsonBuilder().create()
 
-    @JvmStatic @Provides @Singleton fun provideStackOverflowService(okHttpClient: OkHttpClient, gson: Gson): StackOverflowService =
+    @Provides @Singleton fun provideStackOverflowService(okHttpClient: OkHttpClient, gson: Gson): StackOverflowService =
             Retrofit.Builder()
                     .baseUrl("http://api.stackexchange.com/2.2/")
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

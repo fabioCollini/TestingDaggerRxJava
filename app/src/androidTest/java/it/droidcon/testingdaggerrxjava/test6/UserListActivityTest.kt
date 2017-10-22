@@ -9,11 +9,11 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import it.cosenonjaviste.daggermock.DaggerMock
 import it.droidcon.testingdaggerrxjava.R
+import it.droidcon.testingdaggerrxjava.TestApplicationComponent
+import it.droidcon.testingdaggerrxjava.UserInteractorTestModule
 import it.droidcon.testingdaggerrxjava.appFromInstrumentation
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.UserStats
-import it.droidcon.testingdaggerrxjava.dagger.ApplicationComponent
-import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import org.junit.Rule
 import org.junit.Test
@@ -41,6 +41,6 @@ class UserListActivityTest {
     }
 }
 
-fun myDaggerMockRule() = DaggerMock.rule<ApplicationComponent>(UserInteractorModule()) {
+fun myDaggerMockRule() = DaggerMock.rule<TestApplicationComponent>(UserInteractorTestModule()) {
     set { appFromInstrumentation.component = it }
 }

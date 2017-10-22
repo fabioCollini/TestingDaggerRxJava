@@ -1,4 +1,4 @@
-package it.droidcon.testingdaggerrxjava.dagger
+package it.droidcon.testingdaggerrxjava
 
 import dagger.Module
 import dagger.Provides
@@ -6,8 +6,9 @@ import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService
 import javax.inject.Singleton
 
-@Module object UserInteractorModule {
+@Module open class UserInteractorTestModule {
 
-    @JvmStatic @Provides @Singleton fun provideUserInteractor(stackOverflowService: StackOverflowService) =
+    @Provides
+    @Singleton open fun provideUserInteractor(stackOverflowService: StackOverflowService) =
             UserInteractor(stackOverflowService)
 }

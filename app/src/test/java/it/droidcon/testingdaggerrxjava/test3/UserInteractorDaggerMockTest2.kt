@@ -3,24 +3,20 @@ package it.droidcon.testingdaggerrxjava.test3
 import com.nhaarman.mockito_kotlin.mock
 import it.cosenonjaviste.daggermock.DaggerMock
 import it.cosenonjaviste.daggermock.InjectFromComponent
-import it.droidcon.testingdaggerrxjava.TrampolineSchedulerRule
+import it.droidcon.testingdaggerrxjava.*
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.UserStats
 import it.droidcon.testingdaggerrxjava.core.gson.Badge
 import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService
 import it.droidcon.testingdaggerrxjava.core.gson.User
-import it.droidcon.testingdaggerrxjava.dagger.ApplicationComponent
-import it.droidcon.testingdaggerrxjava.dagger.StackOverflowServiceModule
-import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import it.droidcon.testingdaggerrxjava.userlist.UserListPresenter
-import it.droidcon.testingdaggerrxjava.willReturnJust
 import org.assertj.core.api.Java6Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
 
 class UserInteractorDaggerMockTest2 {
-    @get:Rule val daggerMockRule = DaggerMock.rule<ApplicationComponent>(UserInteractorModule(), StackOverflowServiceModule()) {
+    @get:Rule val daggerMockRule = DaggerMock.rule<TestApplicationComponent>(UserInteractorTestModule(), StackOverflowServiceTestModule()) {
         providesMock<UserListActivity>()
     }
 

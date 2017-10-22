@@ -3,17 +3,17 @@ package it.droidcon.testingdaggerrxjava.test3
 import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.Observable
 import io.reactivex.Single
-import it.cosenonjaviste.daggermock.DaggerMockRule
+import it.cosenonjaviste.daggermock.DaggerMock
 import it.cosenonjaviste.daggermock.InjectFromComponent
+import it.droidcon.testingdaggerrxjava.StackOverflowServiceTestModule
+import it.droidcon.testingdaggerrxjava.TestApplicationComponent
 import it.droidcon.testingdaggerrxjava.TrampolineSchedulerRule
+import it.droidcon.testingdaggerrxjava.UserInteractorTestModule
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.UserStats
 import it.droidcon.testingdaggerrxjava.core.gson.Badge
 import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService
 import it.droidcon.testingdaggerrxjava.core.gson.User
-import it.droidcon.testingdaggerrxjava.dagger.ApplicationComponent
-import it.droidcon.testingdaggerrxjava.dagger.StackOverflowServiceModule
-import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import it.droidcon.testingdaggerrxjava.userlist.UserListPresenter
 import org.assertj.core.api.Java6Assertions.assertThat
@@ -22,10 +22,12 @@ import org.junit.Test
 import org.mockito.Mockito.`when`
 
 class UserInteractorDaggerMockTest {
-    @get:Rule val daggerMockRule = DaggerMockRule(ApplicationComponent::class.java, UserInteractorModule(), StackOverflowServiceModule())
-            .providesMock(UserListActivity::class.java)
+    @get:Rule val daggerMockRule = DaggerMock.rule<TestApplicationComponent>(UserInteractorTestModule(), StackOverflowServiceTestModule()) {
+        providesMock<UserListActivity>()
+    }
 
-    @get:Rule val schedulerRule = TrampolineSchedulerRule()
+    @get:Rule
+    val schedulerRule = TrampolineSchedulerRule()
 
     val stackOverflowService: StackOverflowService = mock()
 

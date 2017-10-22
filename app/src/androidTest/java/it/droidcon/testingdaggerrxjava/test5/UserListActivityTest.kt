@@ -5,8 +5,6 @@ import it.cosenonjaviste.daggermock.DaggerMock
 import it.droidcon.testingdaggerrxjava.*
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.UserStats
-import it.droidcon.testingdaggerrxjava.dagger.ApplicationComponent
-import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import org.junit.Rule
 import org.junit.Test
@@ -15,7 +13,7 @@ class UserListActivityTest {
   @get:Rule val rule = activityRule<UserListActivity>()
 
   @get:Rule
-  val daggerMockRule = DaggerMock.rule<ApplicationComponent>(UserInteractorModule()) {
+  val daggerMockRule = DaggerMock.rule<TestApplicationComponent>(UserInteractorTestModule()) {
     set { appFromInstrumentation.component = it }
   }
 
