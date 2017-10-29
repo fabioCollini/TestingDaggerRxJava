@@ -1,4 +1,4 @@
-package it.droidcon.testingdaggerrxjava.dagger
+package it.droidcon.testingdaggerrxjava
 
 import dagger.Module
 import dagger.Provides
@@ -8,6 +8,7 @@ import javax.inject.Singleton
 
 @Module open class UserInteractorModule {
 
-    @Provides @Singleton open fun provideUserInteractor(stackOverflowService: StackOverflowService) =
+    @Provides
+    @Singleton open fun provideUserInteractor(stackOverflowService: StackOverflowService) =
             UserInteractor(stackOverflowService)
 }

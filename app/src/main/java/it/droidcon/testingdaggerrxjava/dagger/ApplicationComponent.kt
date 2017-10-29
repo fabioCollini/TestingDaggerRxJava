@@ -6,7 +6,7 @@ import it.droidcon.testingdaggerrxjava.userlist.UserListModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = arrayOf(UserInteractorModule::class, StackOverflowServiceModule::class))
+@Component(modules = arrayOf(StackOverflowServiceModule::class))
 interface ApplicationComponent {
     fun userListComponent(module: UserListModule): UserListComponent
 }

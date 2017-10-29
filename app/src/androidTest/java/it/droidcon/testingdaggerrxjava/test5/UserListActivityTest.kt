@@ -6,7 +6,6 @@ import it.droidcon.testingdaggerrxjava.*
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.UserStats
 import it.droidcon.testingdaggerrxjava.dagger.ApplicationComponent
-import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import org.junit.Rule
 import org.junit.Test

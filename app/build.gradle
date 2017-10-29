@@ -52,6 +52,7 @@ dependencies {
         exclude group: 'org.jetbrains.kotlin'
     }
 
+    kaptTest 'com.google.dagger:dagger-compiler:2.12'
     kaptAndroidTest 'com.google.dagger:dagger-compiler:2.12'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.1'
     androidTestCompile 'com.github.fabioCollini.daggermock:daggermock:0.8.1'

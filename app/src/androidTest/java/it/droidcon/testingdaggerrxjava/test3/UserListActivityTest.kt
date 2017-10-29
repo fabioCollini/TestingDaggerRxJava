@@ -12,7 +12,6 @@ import it.droidcon.testingdaggerrxjava.appFromInstrumentation
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.UserStats
 import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService
-import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import org.junit.Before
 import org.junit.Rule

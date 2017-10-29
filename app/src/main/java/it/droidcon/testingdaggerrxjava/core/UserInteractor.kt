@@ -3,8 +3,11 @@ package it.droidcon.testingdaggerrxjava.core
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class UserInteractor(
+@Singleton
+class UserInteractor @Inject constructor(
         private val service: StackOverflowService
 ) {
 

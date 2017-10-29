@@ -1,15 +1,14 @@
 package it.droidcon.testingdaggerrxjava
 
-import dagger.Provides
 import org.junit.Test
 import org.mockito.Mockito
 
 class DaggerMockExample {
     class MyModule {
-        @Provides
+//        @Provides
         fun provideString() = "myString"
 
-        @Provides
+//        @Provides
         fun provideInt() = 123
     }
 

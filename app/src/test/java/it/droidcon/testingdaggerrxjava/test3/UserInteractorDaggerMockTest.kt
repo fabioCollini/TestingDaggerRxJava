@@ -5,15 +5,16 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import it.cosenonjaviste.daggermock.DaggerMockRule
 import it.cosenonjaviste.daggermock.InjectFromComponent
+import it.droidcon.testingdaggerrxjava.AsyncTaskSchedulerRule
+import it.droidcon.testingdaggerrxjava.TestApplicationComponent
 import it.droidcon.testingdaggerrxjava.TrampolineSchedulerRule
+import it.droidcon.testingdaggerrxjava.UserInteractorModule
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.UserStats
 import it.droidcon.testingdaggerrxjava.core.gson.Badge
 import it.droidcon.testingdaggerrxjava.core.gson.StackOverflowService
 import it.droidcon.testingdaggerrxjava.core.gson.User
-import it.droidcon.testingdaggerrxjava.dagger.ApplicationComponent
 import it.droidcon.testingdaggerrxjava.dagger.StackOverflowServiceModule
-import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import it.droidcon.testingdaggerrxjava.userlist.UserListPresenter
 import org.assertj.core.api.Java6Assertions.assertThat
@@ -22,7 +23,10 @@ import org.junit.Test
 import org.mockito.Mockito.`when`
 
 class UserInteractorDaggerMockTest {
-    @get:Rule val daggerMockRule = DaggerMockRule(ApplicationComponent::class.java, UserInteractorModule(), StackOverflowServiceModule())
+
+    @get:Rule val asyncTaskRule = AsyncTaskSchedulerRule()
+
+    @get:Rule val daggerMockRule = DaggerMockRule(TestApplicationComponent::class.java, UserInteractorModule(), StackOverflowServiceModule())
             .providesMock(UserListActivity::class.java)
 
     @get:Rule val schedulerRule = TrampolineSchedulerRule()
@@ -33,6 +37,7 @@ class UserInteractorDaggerMockTest {
     lateinit var userInteractor: UserInteractor
 
     @Test fun shouldLoadUsers() {
+        asyncTaskRule
         `when`(stackOverflowService.getTopUsers()).thenReturn(Observable.fromArray(
                 User(1, 50, "user1"),
                 User(2, 30, "user2")

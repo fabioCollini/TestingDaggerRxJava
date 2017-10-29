@@ -3,11 +3,11 @@ package it.droidcon.testingdaggerrxjava.test2
 import com.nhaarman.mockito_kotlin.mock
 import it.cosenonjaviste.daggermock.DaggerMock
 import it.cosenonjaviste.daggermock.InjectFromComponent
+import it.droidcon.testingdaggerrxjava.TestApplicationComponent
 import it.droidcon.testingdaggerrxjava.TrampolineSchedulerRule
+import it.droidcon.testingdaggerrxjava.UserInteractorModule
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.UserStats
-import it.droidcon.testingdaggerrxjava.dagger.ApplicationComponent
-import it.droidcon.testingdaggerrxjava.dagger.UserInteractorModule
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import it.droidcon.testingdaggerrxjava.userlist.UserListPresenter
 import it.droidcon.testingdaggerrxjava.willReturnJust
@@ -17,7 +17,7 @@ import org.mockito.Mockito.verify
 
 class UserListPresenterTest2 {
 
-    @get:Rule val daggerMockRule = DaggerMock.rule<ApplicationComponent>(UserInteractorModule())
+    @get:Rule val daggerMockRule = DaggerMock.rule<TestApplicationComponent>(UserInteractorModule())
 
     @get:Rule val schedulerRule = TrampolineSchedulerRule()
 
