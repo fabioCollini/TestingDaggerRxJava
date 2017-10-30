@@ -8,11 +8,12 @@ import android.support.test.rule.ActivityTestRule
 import io.reactivex.Observable
 import io.reactivex.Single
 import it.cosenonjaviste.daggermock.DaggerMock
+import it.droidcon.testingdaggerrxjava.EspressoTestApplicationComponent
+import it.droidcon.testingdaggerrxjava.EspressoUserInteractorModule
 import it.droidcon.testingdaggerrxjava.R
 import it.droidcon.testingdaggerrxjava.appFromInstrumentation
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.UserStats
-import it.droidcon.testingdaggerrxjava.dagger.ApplicationComponent
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import org.junit.Rule
 import org.junit.Test
@@ -40,6 +41,6 @@ class UserListActivityTest {
     }
 }
 
-fun myDaggerMockRule() = DaggerMock.rule<ApplicationComponent>(UserInteractorModule()) {
+fun myDaggerMockRule() = DaggerMock.rule<EspressoTestApplicationComponent>(EspressoUserInteractorModule()) {
     set { appFromInstrumentation.component = it }
 }

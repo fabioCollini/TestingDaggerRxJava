@@ -4,7 +4,6 @@ import it.cosenonjaviste.daggermock.DaggerMock
 import it.droidcon.testingdaggerrxjava.*
 import it.droidcon.testingdaggerrxjava.core.UserInteractor
 import it.droidcon.testingdaggerrxjava.core.UserStats
-import it.droidcon.testingdaggerrxjava.dagger.ApplicationComponent
 import it.droidcon.testingdaggerrxjava.userlist.UserListActivity
 import org.junit.Rule
 import org.junit.Test
@@ -21,7 +20,7 @@ class UserListActivityTest {
     }
 }
 
-fun myDaggerMockRule() = DaggerMock.rule<ApplicationComponent>(UserInteractorModule()) {
+fun myDaggerMockRule() = DaggerMock.rule<EspressoTestApplicationComponent>(EspressoUserInteractorModule()) {
     providesMock<UserInteractor> {
         it.loadUsers() willReturnJust listOf(
                 UserStats(1, 50, "user1", listOf("badge1")),
